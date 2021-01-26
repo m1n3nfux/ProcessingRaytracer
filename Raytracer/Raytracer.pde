@@ -1,4 +1,4 @@
-PVector resolution = new PVector(10, 10); 
+PVector resolution = new PVector(100, 100); 
 
 Ray[] rays = new Ray[int(resolution.x * resolution.y)];
 Sphere[] spheres = new Sphere[3];
@@ -8,9 +8,9 @@ public void settings(){
 }
 
 void setup() {
-  spheres[1] = new Sphere(new PVector(0,0,50), 5, new PVector(255, 0, 0));
-  spheres[0] = new Sphere(new PVector(0,0,200), 10, new PVector(0, 255, 255));
-  spheres[2] = new Sphere(new PVector(0,0,30), 2, new PVector(0, 0, 255));
+  spheres[2] = new Sphere(new PVector(0,0,50), 50, new PVector(255, 0, 0));
+  spheres[1] = new Sphere(new PVector(0,0,200), 100, new PVector(0, 255, 255));
+  spheres[0] = new Sphere(new PVector(0,0,30), 20, new PVector(0, 0, 255));
   noLoop();
   int index = 0;
   for (int x = 0; x < resolution.x; x++) {
@@ -69,20 +69,30 @@ public float detect_intersection(Ray ray, Sphere sphere){
   // ".mult(0.5)" ist ein hotfix von komischem verschieben von allem .mult(0.5)
   PVector l = ray.origin.sub(sphere.center); 
   
-  float a = ray.direction.dot(ray.direction);
+  //float a = PVector.dot(ray.direction, ray.direction);
+    //float a = ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y + ray.direction.z * ray.direction.z;
   
-  //float b = 2 * ray.direction.dot(ray.origin); //origial
-  float b = 2 * ray.direction.dot(l);
   
-  //float c = ray.origin.dot(ray.origin) - sphere.radius * sphere.radius; // original
-  float c = l.dot(l) - (sphere.radius * sphere.radius);
+  //float b = 2 * PVector.dot(ray.direction, l); //original
+    //float b = 2 * ray.origin.dot(ray.direction);
+
+  
+  //float c = PVector.dot(ray.origin, ray.origin) - sphere.radius * sphere.radius; // original
+  //float c = PVector.dot(l, l) - (sphere.radius * sphere.radius);
   
   
   //float a = 1;
-  //float b = 2 * ray.direction.dot(ray.direction) * ray.origin.dot(ray.origin) - sphere.center.dot(sphere.center);
-  //float c = pow(abs(ray.origin.dot(ray.origin) - sphere.center.dot(sphere.center)), 2);
+  //float b = ray.direction.dot( ray.origin.sub(sphere.center) );
+  //float c = pow(abs(ray.origin.dot(ray.origin) - sphere.center.dot(sphere.center)), 2) - sphere.radius * sphere.radius;
   
-  float delta = b * b - 4 * a * c;
+  //new try x.x
+  float a = pow(ray.direction.mag(), 2);
+  float b = PVector.mult(ray.direction, 2).dot(PVector.sub(ray.origin, sphere.center));
+  float c = pow((PVector.sub(ray.origin, sphere.center).mag()), 2) - pow(sphere.radius, 2);
+  //println(a);
+  
+  
+  float delta = pow(b, 2) - 4 * a * c;
   if( delta > 0){
     // 2 intersections
     //t1 = -0.5 * (b + sqrt(delta));
@@ -121,22 +131,19 @@ public PVector calculate_intersection(float[] t, Ray ray){
 */
 
 public void render(){ 
-  //float t_array[[t(sphere1), t(sphere2) ],[]] = new float[100*100];
-  //t_array[pixel[0]]
-  
+  int t_fix[][] = new int[int(resolution.x * resolution.y)][spheres.length];
   for(Ray ray : rays){
+  //for (int j = 0; j < rays.length; j++){
     float t_min = 0;
     Sphere closest_sphere;
     PVector closest_sphere_color = new PVector(0,0,0);
-    float t_array[][] = new float[spheres.length][2];
-    
+  
     for(int i = 0; i < spheres.length; i++){
       Sphere sphere = spheres[i];
       float t = detect_intersection(ray, sphere);
-      
-      t_array[i] = new float[] { i, t };
+      //t_fix[j] = {j, t}
       //println(t);
-      /*if( t != 0 ){
+      if( t != 0 ){
         // if hit
         if (t_min == 0) {
           //first hit
@@ -145,12 +152,14 @@ public void render(){
           closest_sphere_color = closest_sphere.s_color;
         } else if (t < t_min) {
           //even closer hit
-            t_min = t;
-            closest_sphere = sphere;
-            closest_sphere_color = closest_sphere.s_color;
+          t_min = t;
+          println(t);
+          closest_sphere = sphere;
+          closest_sphere_color = closest_sphere.s_color;
         }
-      }*/
-    println(t_array[i]);
+      }
+    
+    //println(t_array[i][0], t_array[i][1], ray.origin.x, ray.origin.y);
     }
     //println(t_min);
     // Drawing the pixel
@@ -165,5 +174,6 @@ public void render(){
     point(ray.origin.x, ray.origin.y);
     
   }
+
   return;
 }
