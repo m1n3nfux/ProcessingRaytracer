@@ -37,13 +37,34 @@ class Ray {
   PVector origin;
   PVector direction;
   
+  // Intersection
+  float intersection_dist;
+  Sphere intersection_object;
+  
   Ray(PVector origin_, PVector direction_) {
     origin = origin_;
     direction = direction_;
   }
   
   // Class Functions
-
+  void get_intersection() {
+    float t_min = 0;
+    Sphere closest_sphere = null;
+  
+    for(Sphere sphere : spheres){
+      float t = calc_intersection_dist(this, sphere);
+      
+      if( t != 0 ){ // hit
+        if (t_min == 0 || t < t_min) {
+          t_min = t;
+          closest_sphere = sphere;
+        }
+      }
+    }
+    
+    intersection_dist = t_min;
+    intersection_object = closest_sphere; 
+  }
 }
 
 class Sphere {
@@ -61,7 +82,7 @@ class Sphere {
    
 }
 
-public float detect_intersection(Ray ray, Sphere sphere){
+public float calc_intersection_dist(Ray ray, Sphere sphere){
   float t0;
   float t1;
   float t2;
@@ -110,25 +131,11 @@ public PVector calculate_intersection(float[] t, Ray ray){
 
 public void render(){ 
   for(Ray ray : rays){
-    float t_min = 0;
-    Sphere closest_sphere;
-    PVector closest_sphere_color = new PVector(0,0,0);
-  
-    for(Sphere sphere : spheres){
-      float t = detect_intersection(ray, sphere);
-      
-      if( t != 0 ){ // hit
-        if (t_min == 0 || t < t_min) {
-          t_min = t;
-          closest_sphere = sphere;
-          closest_sphere_color = closest_sphere.s_color;
-        }
-      }
-    }
+    ray.get_intersection();
     
     // Drawing the pixel
-    if (t_min != 0){ //if any hit, fill color = color of closest sphere
-      stroke(closest_sphere_color.x, closest_sphere_color.y, closest_sphere_color.z);
+    if (ray.intersection_dist != 0){ //if any hit, fill color = color of closest sphere
+      stroke(ray.intersection_object.s_color.x, ray.intersection_object.s_color.y, ray.intersection_object.s_color.z);
     } else { //if no hit, fill color = background color
       stroke(bg_color.x, bg_color.y, bg_color.z);
     }
