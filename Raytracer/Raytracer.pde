@@ -1,4 +1,4 @@
-PVector resolution = new PVector(100, 100); 
+PVector resolution = new PVector(150, 150); 
 
 Ray[] rays = new Ray[int(resolution.x * resolution.y)];
 Sphere[] spheres = new Sphere[3];
@@ -8,7 +8,7 @@ public void settings(){
 }
 
 void setup() {
-  spheres[2] = new Sphere(new PVector(0,0,50), 50, new PVector(255, 0, 0));
+  spheres[2] = new Sphere(new PVector(50,0,50), 50, new PVector(255, 0, 0));
   spheres[1] = new Sphere(new PVector(0,0,200), 100, new PVector(0, 255, 255));
   spheres[0] = new Sphere(new PVector(0,0,30), 20, new PVector(0, 0, 255));
   noLoop();
@@ -67,7 +67,7 @@ public float detect_intersection(Ray ray, Sphere sphere){
   // formeln von scratchapixel.com
   
   // ".mult(0.5)" ist ein hotfix von komischem verschieben von allem .mult(0.5)
-  PVector l = ray.origin.sub(sphere.center); 
+ //PVector l = ray.origin.sub(sphere.center); 
   
   //float a = PVector.dot(ray.direction, ray.direction);
     //float a = ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y + ray.direction.z * ray.direction.z;
