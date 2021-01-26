@@ -5,6 +5,8 @@ PVector bg_color = new PVector(0, 0, 0);
 Ray[] rays = new Ray[int(resolution.x * resolution.y)];
 Sphere[] spheres = new Sphere[3];
 
+int iterations = 1;
+
 public void settings(){
   size(int(resolution.x),int(resolution.y));
 }
