@@ -1,4 +1,4 @@
-PVector resolution = new PVector(150, 150); 
+PVector resolution = new PVector(400, 400); 
 
 PVector bg_color = new PVector(0, 0, 0);
 
@@ -10,9 +10,9 @@ public void settings(){
 }
 
 void setup() {
-  spheres[2] = new Sphere(new PVector(50,0,50), 50, new PVector(255, 0, 0));
-  spheres[1] = new Sphere(new PVector(0,0,200), 100, new PVector(0, 255, 255));
-  spheres[0] = new Sphere(new PVector(0,0,30), 20, new PVector(0, 0, 255));
+  spheres[2] = new Sphere(new PVector(5,5,50), 20, new PVector(255, 0, 0));
+  spheres[1] = new Sphere(new PVector(0,0,300), 200, new PVector(0, 255, 255));
+  spheres[0] = new Sphere(new PVector(200,200,30), 20, new PVector(0, 0, 255));
   noLoop();
   int index = 0;
   for (int x = 0; x < resolution.x; x++) {
@@ -39,6 +39,8 @@ class Ray {
   
   // Intersection
   float intersection_dist;
+  PVector intersection_point;
+  PVector intersection_normal;
   Sphere intersection_object;
   
   Ray(PVector origin_, PVector direction_) {
@@ -64,6 +66,8 @@ class Ray {
     
     intersection_dist = t_min;
     intersection_object = closest_sphere; 
+    intersection_point = calc_intersection_point(t_min, this);
+    intersection_normal = PVector.sub(intersection_point, intersection_object.center).normalize();
   }
 }
 
@@ -117,17 +121,14 @@ public float calc_intersection_dist(Ray ray, Sphere sphere){
   //println(t0);
   return t0;
 }
-/*
-public PVector calculate_intersection(float[] t, Ray ray){
-  PVector closest_intersection = new PVector();
-  if ( t[0] <= t[1] ){
-    closest_intersection = ray.origin.add(ray.direction.mult(t[0]));
-  }  else if ( t[1] < t[0] ){
-    closest_intersection = ray.origin.add(ray.direction.mult(t[1]));
-  }
-  return closest_intersection;
+
+public PVector calc_intersection_point(float t, Ray ray){
+  PVector intersection_point = new PVector();
+  intersection_point = PVector.add(ray.origin, PVector.mult(ray.direction, t));
+  
+  return intersection_point;
 }
-*/
+
 
 public void render(){ 
   for(Ray ray : rays){
