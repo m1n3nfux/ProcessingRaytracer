@@ -43,29 +43,37 @@ Ergebnisse s. Oben ;)
 
 #### Mi. 13.01.2021 
 
-Recherche
+-Recherche
 
-Github Repository aufgesetzt ( https://github.com/m1n3nfux/ProcessingRaytracer/ )
+-Github Repository aufgesetzt ( https://github.com/m1n3nfux/ProcessingRaytracer/ )
 
-Ray-Klasse und Ray-Array mit Ray-Objekten erstellt
+-Ray-Klasse und Ray-Array mit Ray-Objekten erstellt
 
-Sphere-Klasse erstellt
+-Sphere-Klasse erstellt
 
 
 #### Mi. 20.01.2021
 
-Render-Funktion erstellt
+-Render-Funktion erstellt
 
-Erster render
+-Erster render
 
-Bugs:
+-Bugs:
 
-Invertierte Farben
+  *Invertierte Farben
 
-Mit den älteren Formeln teilweise gefixt
+  *Mit den älteren Formeln teilweise gefixt
 
-Sphere center verändert den Radius, nicht den Ort
+  *Sphere center verändert den Radius, nicht den Ort
 
-Mit den älteren Formeln teilweise gefixt, Radius funktioniert, aber ort nicht.
+  *Mit den älteren Formeln teilweise gefixt, Radius funktioniert, aber ort nicht.
+  
+
+#### Do. 26.01.2021
+
+-"Canvas shift" gefixed
+-Code Cleanup
+-Intersection-varibalen in die Ray-Klasse verschoben
+-Normals berechnet
 
 
