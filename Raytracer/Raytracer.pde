@@ -66,11 +66,33 @@ class Ray {
       }
     }
     
-    intersection_dist = t_min;
-    intersection_object = closest_sphere; 
-    intersection_point = calc_intersection_point(t_min, this);
-    intersection_normal = PVector.sub(intersection_point, intersection_object.center).normalize();
+    if (t_min != 0) {
+      intersection_dist = t_min;
+      intersection_object = closest_sphere; 
+      intersection_point = calc_intersection_point(t_min, this);
+      intersection_normal = PVector.sub(intersection_point, intersection_object.center).normalize();
+      
+    }
   }
+  
+  PVector cast(PVector rColor, int count) {
+    get_intersection();
+     
+    if (intersection_dist != 0) {
+      //colour += sphere.colour;
+      PVector intersection_direction;
+      if (count  < iterations) {
+      
+        Ray r = new Ray(intersection_point, intersection_direction);
+        return r.cast(rColor, count++);
+      }
+    } else {
+      //rColor += black;
+    }
+   
+    return rColor;// pixel zeichnen mit colour an pos
+  }
+  
 }
 
 class Sphere {
@@ -132,18 +154,17 @@ public PVector calc_intersection_point(float t, Ray ray){
 }
 
 
+
+
+
+
 public void render(){ 
   for(Ray ray : rays){
-    ray.get_intersection();
+    PVector rColor = ray.cast(new PVector(0, 0, 0), 0);
     
     // Drawing the pixel
-    if (ray.intersection_dist != 0){ //if any hit, fill color = color of closest sphere
-      stroke(ray.intersection_object.s_color.x, ray.intersection_object.s_color.y, ray.intersection_object.s_color.z);
-    } else { //if no hit, fill color = background color
-      stroke(bg_color.x, bg_color.y, bg_color.z);
-    }
+    stroke(rColor.x, rColor.y, rColor.z);
     point(ray.origin.x, ray.origin.y);
-    
   }
 
   return;
