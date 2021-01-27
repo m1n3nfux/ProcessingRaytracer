@@ -5,7 +5,7 @@ Eine beliebige Anzahl beliebiger 3D Objekte lassen sich in einem virtuellen Raum
 Später können eventuell noch Field-Of-View / Perspektive, Spiegelungen und Bewegungen realisiert werden.
 
 ### Ressourcen, Links, Tips, Ideen, ...
-Programmieren und so
+#### Programmieren und so
 - https://processing.org/reference/
 
 #### Mathe und so
@@ -54,3 +54,7 @@ Ergebnisse s. Oben ;)
 - Intersection-varibalen in die Ray-Klasse verschoben
 - Normals berechnet
 - Ray "cast" Funktion eingebaut und damit Grundgerüst für Schatten und Spiegelungen gelegt
+
+#### Mi. 27.01.2021
+- Mathematik zu "Einfallswinkel gleich Ausfallswinkel" im dreidimensionalen Raum recherchiert und angewandt
+- => Wir können jetzt einen neuen Ray vom Auftreffpunkt des letzten aussenden => Schatten und Reflektionen
