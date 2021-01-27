@@ -1,4 +1,4 @@
-PVector resolution = new PVector(400, 400); 
+PVector resolution = new PVector(10, 10); 
 
 PVector bg_color = new PVector(0, 0, 0);
 
@@ -80,16 +80,18 @@ class Ray {
      
     if (intersection_dist != 0) {
       //colour += sphere.colour;
-      PVector intersection_direction;
+      
       if (count  < iterations) {
       
-        Ray r = new Ray(intersection_point, intersection_direction);
+        PVector d = PVector.mult(direction, intersection_dist);
+        PVector intersection_vector = PVector.sub(PVector.mult(intersection_normal, 2 * PVector.dot(d, intersection_normal)), d);
+        
+        Ray r = new Ray(intersection_point, intersection_vector.normalize());
         return r.cast(rColor, count++);
       }
     } else {
       //rColor += black;
     }
-   
     return rColor;// pixel zeichnen mit colour an pos
   }
   
