@@ -57,4 +57,4 @@ Ergebnisse s. Oben ;)
 
 #### Mi. 27.01.2021
 - Mathematik zu "Einfallswinkel gleich Ausfallswinkel" im dreidimensionalen Raum recherchiert und angewandt
-- => Wir können jetzt einen neuen Ray vom Auftreffpunkt des letzten aussenden => Schatten und Reflektionen
+- => Wir können jetzt einen neuen Ray vom Auftreffpunkt des letzten aussenden (ein weiterer Schritt zu Schatten und Reflektionen)
