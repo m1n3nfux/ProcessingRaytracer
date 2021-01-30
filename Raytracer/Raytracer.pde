@@ -1,20 +1,22 @@
-PVector resolution = new PVector(10, 10); 
+PVector resolution = new PVector(720, 480); 
 
 PVector bg_color = new PVector(0, 0, 0);
 
 Ray[] rays = new Ray[int(resolution.x * resolution.y)];
 Sphere[] spheres = new Sphere[3];
 
-int iterations = 1;
+int iterations = 9;
 
 public void settings(){
   size(int(resolution.x),int(resolution.y));
+  //fullScreen();
 }
 
 void setup() {
-  spheres[2] = new Sphere(new PVector(5,5,50), 20, new PVector(255, 0, 0));
-  spheres[1] = new Sphere(new PVector(0,0,300), 200, new PVector(0, 255, 255));
-  spheres[0] = new Sphere(new PVector(200,200,30), 20, new PVector(0, 0, 255));
+  spheres[0] = new Sphere(new PVector(500, 250,300), 150, new PVector(255, 0, 0));
+  spheres[1] = new Sphere(new PVector(100,50,100), 50, new PVector(0, 255, 255));
+  spheres[2] = new Sphere(new PVector(300,150,80), 25, new PVector(0, 0, 255));
+  //spheres[3] = new Sphere(new PVector(width/2, height/2, 40000), 5000, new PVector(255, 255, 255));
   noLoop();
   int index = 0;
   for (int x = 0; x < resolution.x; x++) {
@@ -25,6 +27,7 @@ void setup() {
   }
   
 }
+
 
 void draw() {
   /*for(Ray ray : rays) {
@@ -75,11 +78,11 @@ class Ray {
     }
   }
   
-  PVector cast(PVector rColor, int count) {
+  PVector[] cast(PVector[] rColor, int count) {
     get_intersection();
-     
+    
     if (intersection_dist != 0) {
-      //colour += sphere.colour;
+      rColor = ( PVector[] ) append(rColor, intersection_object.s_color);  
       
       if (count  < iterations) {
       
@@ -87,10 +90,10 @@ class Ray {
         PVector intersection_vector = PVector.sub(PVector.mult(intersection_normal, 2 * PVector.dot(d, intersection_normal)), d);
         
         Ray r = new Ray(intersection_point, intersection_vector.normalize());
-        return r.cast(rColor, count++);
+        return r.cast(rColor, count + 1);
       }
     } else {
-      //rColor += black;
+      rColor = ( PVector[] ) append(rColor, bg_color);
     }
     return rColor;// pixel zeichnen mit colour an pos
   }
@@ -155,14 +158,24 @@ public PVector calc_intersection_point(float t, Ray ray){
   return intersection_point;
 }
 
-
-
-
+PVector calculate_color(PVector[] colors, float mixfac){
+  PVector newcolor;
+  if (colors.length > 0) {
+    newcolor = colors[0];
+    for(int i = 0; i < colors.length; i++){
+      newcolor = PVector.add(PVector.mult(newcolor, mixfac), PVector.mult(colors[i], 1-mixfac));
+    }
+  } else {
+    newcolor = new PVector();
+  }
+  
+  return newcolor;
+}
 
 
 public void render(){ 
   for(Ray ray : rays){
-    PVector rColor = ray.cast(new PVector(0, 0, 0), 0);
+    PVector rColor = calculate_color(ray.cast(new PVector[] {}, 0), 0.7);
     
     // Drawing the pixel
     stroke(rColor.x, rColor.y, rColor.z);
