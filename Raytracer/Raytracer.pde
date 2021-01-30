@@ -1,20 +1,22 @@
-PVector resolution = new PVector(1920, 1080); 
+PVector resolution = new PVector(720, 480); 
 
 PVector bg_color = new PVector(0, 0, 0);
 
 Ray[] rays = new Ray[int(resolution.x * resolution.y)];
 Sphere[] spheres = new Sphere[3];
 
-int iterations = 1;
+int iterations = 9;
 
 public void settings(){
   size(int(resolution.x),int(resolution.y));
+  //fullScreen();
 }
 
 void setup() {
-  spheres[2] = new Sphere(new PVector(500, 500,300), 150, new PVector(255, 0, 0));
-  spheres[1] = new Sphere(new PVector(0,0,100), 100, new PVector(0, 255, 255));
-  spheres[0] = new Sphere(new PVector(150,150,80), 50, new PVector(0, 0, 255));
+  spheres[0] = new Sphere(new PVector(500, 250,300), 150, new PVector(255, 0, 0));
+  spheres[1] = new Sphere(new PVector(100,50,100), 50, new PVector(0, 255, 255));
+  spheres[2] = new Sphere(new PVector(300,150,80), 25, new PVector(0, 0, 255));
+  //spheres[3] = new Sphere(new PVector(width/2, height/2, 40000), 5000, new PVector(255, 255, 255));
   noLoop();
   int index = 0;
   for (int x = 0; x < resolution.x; x++) {
@@ -23,8 +25,9 @@ void setup() {
       index++;
     }
   }
-  fullScreen();
+  
 }
+
 
 void draw() {
   /*for(Ray ray : rays) {
