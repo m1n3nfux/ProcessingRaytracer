@@ -24,8 +24,8 @@ Raycasting in Processing Codebeispiel
 - √ Recherche zur Funktionsweise und Mathematik (Line-Sphere-Collision, etc.) 
 - √ Gruppeneinteilung / Aufgabenverteilung
 - √ Programmierung von einem sehr einfachen "ray-tracer", der die Objekte einfarbig und ohne Schatten darstellt
-- Implementierung von Schatten und Refletionen (Auftreff-winkel, ...)
-- Diffusion
+- √ Implementierung von Schatten und Refletionen (Auftreff-winkel, ...)
+- √ Diffusion
 - Lampen-Objekt (im Grunde eine weiße Kugel, die die Farbe eines Reflection Rays aufhellt (weiß))
 - FOV (field of view) (Rays in einem Winkel von der Kamera) => Perspektive
 - Einstellbare Relfektivität von Objekten
@@ -62,3 +62,8 @@ Ergebnisse s. Oben ;)
 #### Mi. 27.01.2021
 - Mathematik zu "Einfallswinkel gleich Ausfallswinkel" im dreidimensionalen Raum recherchiert und angewandt
 - => Wir können jetzt einen neuen Ray vom Auftreffpunkt des letzten aussenden (ein weiterer Schritt zu Schatten und Reflektionen)
+
+#### Sa. 30.01.2021
+- Negative Normals gefixed, Normals, die in Kugeln waren gefixed
+- Cleanup
+- Object-Klasse
