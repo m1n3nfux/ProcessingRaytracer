@@ -5,7 +5,7 @@ PVector bg_color = new PVector(0, 0, 0);
 Ray[] rays = new Ray[int(resolution.x * resolution.y)];
 Sphere[] spheres = new Sphere[3];
 
-int iterations = 50;
+int bounces = 50;
 
 public void settings(){
   size(600, 600);
@@ -14,16 +14,17 @@ public void settings(){
 }
 
 void setup() {
-  //spheres[0] = new Sphere(new PVector(300, 2450, 300), 2000, new PVector(216, 232, 255), 1);
+  spheres[0] = new Sphere(new PVector(300, 2500, 3000), 2000, new PVector(72, 79, 84), 0.5, 0.8);
+  spheres[1] = new Sphere(new PVector(300, -2500, 3000), 2000, new PVector(255, 255, 255), 1, 0.3);
   
   
   // rote Kugel
-  spheres[0] = new Sphere(new PVector(300, 300, 300), 150, new PVector(255, 0, 0), 0.3);
+  spheres[2] = new Sphere(new PVector(300, 300, 3000), 200, new PVector(255, 0, 0), 0.3, 0.3);
   
   
-  spheres[1] = new Sphere(new PVector(100,50,100), 50, new PVector(0, 255, 255), 0.6);
-  spheres[2] = new Sphere(new PVector(300,150,80), 25, new PVector(0, 0, 255), 0.7);
-  //spheres[3] = new Sphere(new PVector(width/2, height/2, 40000), 5000, new PVector(255, 255, 255));
+  //spheres[1] = new Sphere(new PVector(100, 50, 100), 50, new PVector(0, 200, 255), 0.6, 0.1);
+  //spheres[2] = new Sphere(new PVector(500, 50, 100), 50, new PVector(0, 200, 255), 0.7, 0.9);
+  
   noLoop();
   
   int index = 0;
@@ -39,7 +40,7 @@ void setup() {
 
 void draw() {
   for(Ray ray : rays){
-    PVector rColor = ray.cast(new PVector(), 0);
+    PVector rColor = ray.cast(null, new PVector(), 0);
     
     // Drawing the pixel
     stroke(rColor.x, rColor.y, rColor.z);
@@ -86,15 +87,20 @@ class Ray {
     }
   }
   
-  PVector cast(PVector prevColor, int count) {
-    PVector newColor;
+  PVector cast(Object firstHitObject, PVector prevColor, int count) {
+    PVector newColor = new PVector();
     
     get_intersection();
     
     if (intersection_dist != 0) {      
-      if (count  < iterations) {
-        // Mixing current color with object-color
-        newColor = PVector.add(PVector.mult(intersection_object.Color, 0.7), PVector.mult(prevColor, 0.3));
+      if (count  < bounces) {
+        
+        if (count == 0) {
+          newColor = intersection_object.Color;
+          firstHitObject = intersection_object;
+        } else { // Mixing current color with object-color
+          newColor = PVector.add(PVector.mult(intersection_object.Color, firstHitObject.gloss), PVector.mult(prevColor, 1-firstHitObject.gloss));
+        }
       
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
         PVector d = PVector.mult(direction, intersection_dist);
@@ -107,13 +113,13 @@ class Ray {
         // Only cast the next ray if it doesn't point into the object
         if (PVector.dot(rDirection, intersection_normal) >= 0) {
           Ray r = new Ray(rOrigin, rDirection);
-          return r.cast(newColor, count + 1);
+          return r.cast(firstHitObject, newColor, count + 1);
         }
       }
       
     } else {
       // Mixing with black
-      newColor = PVector.add(PVector.mult(bg_color, 0.7), PVector.mult(prevColor, 0.3));
+      //newColor = PVector.add(PVector.mult(bg_color, 0.7), PVector.mult(prevColor, 0.3));
     }
     
     // Returning final color
@@ -127,16 +133,18 @@ class Object {
   
   PVector Color;
   float roughness;
+  float gloss;
 }
 
 class Sphere extends Object{ 
    int radius;
    
-   Sphere(PVector center_, int radius_, PVector color_, float roughness_){
+   Sphere(PVector center_, int radius_, PVector color_, float roughness_, float gloss_){
      center = center_;
      radius = radius_;
      Color = color_;
      roughness = roughness_;
+     gloss = gloss_;
    } 
    
   float calc_intersection_dist(Ray ray){
@@ -170,16 +178,4 @@ class Sphere extends Object{
     
     return t0;
   }
-}
-
-PVector calculate_color(PVector[] colors, float mixfac){
-  PVector newcolor = new PVector();
-  
-  if (colors.length > 0) {
-    for(int i = 0; i < colors.length; i++){
-      newcolor = PVector.add(PVector.mult(newcolor, mixfac), PVector.mult(colors[i], 1-mixfac));
-    }
-  }
-  
-  return newcolor;
 }
