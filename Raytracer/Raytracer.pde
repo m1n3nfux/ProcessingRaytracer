@@ -38,12 +38,13 @@ void setup() {
 
 
 void draw() {
-  /*for(Ray ray : rays) {
-    println(PVector.add(ray.origin, ray.direction.mult(4)));
+  for(Ray ray : rays){
+    PVector rColor = ray.cast(new PVector(), 0);
+    
+    // Drawing the pixel
+    stroke(rColor.x, rColor.y, rColor.z);
+    point(ray.origin.x, ray.origin.y);
   }
-  */
-  render();
-   
 }
 
 class Ray {
@@ -85,13 +86,16 @@ class Ray {
     }
   }
   
-  PVector[] cast(PVector[] colors, int count) {
+  PVector cast(PVector prevColor, int count) {
+    PVector newColor;
+    
     get_intersection();
     
-    if (intersection_dist != 0) {
-      colors = ( PVector[] ) append(colors, intersection_object.Color);
-      
+    if (intersection_dist != 0) {      
       if (count  < iterations) {
+        // Mixing current color with object-color
+        newColor = PVector.add(PVector.mult(intersection_object.Color, 0.7), PVector.mult(prevColor, 0.3));
+      
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
         PVector d = PVector.mult(direction, intersection_dist);
         PVector intersection_vector = PVector.sub(PVector.mult(intersection_normal, 2 * PVector.dot(d, intersection_normal)), d);
@@ -103,15 +107,17 @@ class Ray {
         // Only cast the next ray if it doesn't point into the object
         if (PVector.dot(rDirection, intersection_normal) >= 0) {
           Ray r = new Ray(rOrigin, rDirection);
-          return r.cast(colors, count + 1);
+          return r.cast(newColor, count + 1);
         }
       }
+      
     } else {
-      colors = ( PVector[] ) append(colors, bg_color);
+      // Mixing with black
+      newColor = PVector.add(PVector.mult(bg_color, 0.7), PVector.mult(prevColor, 0.3));
     }
     
-    // Returning an aray of colors 
-    return colors;
+    // Returning final color
+    return newColor;
   }
   
 }
@@ -176,17 +182,4 @@ PVector calculate_color(PVector[] colors, float mixfac){
   }
   
   return newcolor;
-}
-
-
-public void render(){ 
-  for(Ray ray : rays){
-    PVector rColor = calculate_color(ray.cast(new PVector[] {}, 0), 0.3);
-    
-    // Drawing the pixel
-    stroke(rColor.x, rColor.y, rColor.z);
-    point(ray.origin.x, ray.origin.y);
-  }
-
-  return;
 }
