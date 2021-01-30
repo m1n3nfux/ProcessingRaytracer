@@ -1,4 +1,4 @@
-PVector resolution = new PVector(720, 480); 
+PVector resolution = new PVector(700, 700); 
 
 PVector bg_color = new PVector(0, 0, 0);
 
@@ -13,9 +13,9 @@ public void settings(){
 }
 
 void setup() {
-  spheres[0] = new Sphere(new PVector(500, 250,300), 150, new PVector(255, 0, 0));
-  spheres[1] = new Sphere(new PVector(100,50,100), 50, new PVector(0, 255, 255));
-  spheres[2] = new Sphere(new PVector(300,150,80), 25, new PVector(0, 0, 255));
+  spheres[0] = new Sphere(new PVector(500, 250,300), 150, new PVector(255, 0, 0), 0.3);
+  spheres[1] = new Sphere(new PVector(100,50,100), 50, new PVector(0, 255, 255), 0.6);
+  spheres[2] = new Sphere(new PVector(300,150,80), 25, new PVector(0, 0, 255), 0.7);
   //spheres[3] = new Sphere(new PVector(width/2, height/2, 40000), 5000, new PVector(255, 255, 255));
   noLoop();
   int index = 0;
@@ -85,16 +85,19 @@ class Ray {
       rColor = ( PVector[] ) append(rColor, intersection_object.s_color);  
       
       if (count  < iterations) {
-      
         PVector d = PVector.mult(direction, intersection_dist);
         PVector intersection_vector = PVector.sub(PVector.mult(intersection_normal, 2 * PVector.dot(d, intersection_normal)), d);
         
-        Ray r = new Ray(intersection_point, intersection_vector.normalize());
+        PVector rDirection = PVector.add(intersection_vector.normalize(), new PVector(random(0, 1) * intersection_object.roughness, random(0, 1) * intersection_object.roughness, random(0, 1) * intersection_object.roughness)).normalize();
+        PVector rOrigin = PVector.add(intersection_point, PVector.mult(rDirection, 0.001)); // The successive ray gets a small offset 
+        
+        Ray r = new Ray(rOrigin, rDirection);
         return r.cast(rColor, count + 1);
       }
     } else {
       rColor = ( PVector[] ) append(rColor, bg_color);
     }
+    
     return rColor;// pixel zeichnen mit colour an pos
   }
   
@@ -104,11 +107,13 @@ class Sphere {
    PVector center;
    int radius;
    PVector s_color;
+   float roughness;
    
-   Sphere(PVector center_, int radius_, PVector color_){
+   Sphere(PVector center_, int radius_, PVector color_, float r){
      center = center_;
      radius = radius_;
      s_color = color_;
+     roughness = r;
    }
    
    // Class Functions
@@ -166,7 +171,7 @@ PVector calculate_color(PVector[] colors, float mixfac){
       newcolor = PVector.add(PVector.mult(newcolor, mixfac), PVector.mult(colors[i], 1-mixfac));
     }
   } else {
-    newcolor = new PVector();
+    newcolor = new PVector(0, 0, 0);
   }
   
   return newcolor;
