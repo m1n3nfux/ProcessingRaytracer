@@ -25,6 +25,7 @@ Raycasting in Processing Codebeispiel
 - √ Gruppeneinteilung / Aufgabenverteilung
 - √ Programmierung von einem sehr einfachen "ray-tracer", der die Objekte einfarbig und ohne Schatten darstellt
 - Implementierung von Schatten und Refletionen (Auftreff-winkel, ...)
+- Diffusion
 - Lampen-Objekt (im Grunde eine weiße Kugel, die die Farbe eines Reflection Rays aufhellt (weiß))
 - FOV (field of view) (Rays in einem Winkel von der Kamera) => Perspektive
 - Einstellbare Relfektivität von Objekten
