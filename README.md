@@ -24,8 +24,10 @@ Raycasting in Processing Codebeispiel
 - √ Recherche zur Funktionsweise und Mathematik (Line-Sphere-Collision, etc.) 
 - √ Gruppeneinteilung / Aufgabenverteilung
 - √ Programmierung von einem sehr einfachen "ray-tracer", der die Objekte einfarbig und ohne Schatten darstellt
-- Implementierung von Schatten (Auftreff-winkel, ...)
-- Implementierung von FOV (field of view) (Rays in einem Winkel von der Kamera)
+- Implementierung von Schatten und Reflexionen (Auftreff-winkel, ...)
+- FOV (field of view) (Rays in einem Winkel von der Kamera)
+- Einstellbare Relfektivität von Objekten
+- Unterschiedliche Arten von Objekten
 
 
 
