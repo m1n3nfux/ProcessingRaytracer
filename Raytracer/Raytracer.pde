@@ -54,7 +54,7 @@ class Ray {
   float intersection_dist;
   PVector intersection_point;
   PVector intersection_normal;
-  Sphere intersection_object;
+  Object intersection_object;
   
   Ray(PVector origin_, PVector direction_) {
     origin = origin_;
@@ -64,22 +64,22 @@ class Ray {
   // Class Functions
   void get_intersection() {
     float t_min = 0;
-    Sphere closest_sphere = null;
+    Object closest = null;
   
     for(Sphere sphere : spheres){
-      float t = calc_intersection_dist(this, sphere);
+      float t = sphere.calc_intersection_dist(this);
       
       if( t != 0 ){ // hit
         if (t_min == 0 || t < t_min) {
           t_min = t;
-          closest_sphere = sphere;
+          closest = sphere;
         }
       }
     }
     
     if (t_min != 0) {
       intersection_dist = t_min;
-      intersection_object = closest_sphere; 
+      intersection_object = closest; 
       intersection_point = PVector.add(origin, PVector.mult(direction, intersection_dist));
       intersection_normal = PVector.sub(intersection_object.center, intersection_point).normalize();
     }
@@ -89,7 +89,7 @@ class Ray {
     get_intersection();
     
     if (intersection_dist != 0) {
-      colors = ( PVector[] ) append(colors, intersection_object.s_color);
+      colors = ( PVector[] ) append(colors, intersection_object.Color);
       
       if (count  < iterations) {
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
@@ -116,17 +116,20 @@ class Ray {
   
 }
 
-class Sphere {
-   PVector center;
+class Object {
+  PVector center;
+  
+  PVector Color;
+  float roughness;
+}
+
+class Sphere extends Object{ 
    int radius;
-   
-   PVector s_color;
-   float roughness;
    
    Sphere(PVector center_, int radius_, PVector color_, float roughness_){
      center = center_;
      radius = radius_;
-     s_color = color_;
+     Color = color_;
      roughness = roughness_;
    } 
    
@@ -137,8 +140,8 @@ class Sphere {
     
     // formeln von scratchapixel.com
     float a = pow(ray.direction.mag(), 2);
-    float b = PVector.mult(ray.direction, 2).dot(PVector.sub(ray.origin, sphere.center));
-    float c = pow((PVector.sub(ray.origin, sphere.center).mag()), 2) - pow(sphere.radius, 2);
+    float b = PVector.mult(ray.direction, 2).dot(PVector.sub(ray.origin, center));
+    float c = pow((PVector.sub(ray.origin, center).mag()), 2) - pow(radius, 2);
     
     float delta = pow(b, 2) - 4 * a * c;
     if( delta > 0){ // 2 intersections
