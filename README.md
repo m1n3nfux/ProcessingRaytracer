@@ -7,6 +7,7 @@ Später können eventuell noch Field-Of-View / Perspektive, Spiegelungen und Bew
 ### Ressourcen, Links, Tips, Ideen, ...
 #### Programmieren und so
 - https://processing.org/reference/
+- https://raytracing.github.io/books/RayTracingInOneWeekend.html#surfacenormalsandmultipleobjects/frontfacesversusbackfaces
 
 #### Mathe und so
 - https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
