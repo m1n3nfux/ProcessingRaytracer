@@ -53,10 +53,10 @@ class Ray {
   PVector direction;
   
   // Intersection
-  float intersection_dist;
-  PVector intersection_point;
-  PVector intersection_normal;
-  Object intersection_object;
+  float intDist;
+  PVector intPoint;
+  PVector intNormal;
+  Object intObj;
   
   Ray(PVector origin_, PVector direction_) {
     origin = origin_;
@@ -64,7 +64,7 @@ class Ray {
   }
   
   // Class Functions
-  void get_intersection() {
+  boolean get_intersection() {
     float t_min = 0;
     Object closest = null;
   
@@ -80,38 +80,39 @@ class Ray {
     }
     
     if (t_min != 0) {
-      intersection_dist = t_min;
-      intersection_object = closest; 
-      intersection_point = PVector.add(origin, PVector.mult(direction, intersection_dist));
-      intersection_normal = PVector.sub(intersection_object.center, intersection_point).normalize();
+      intDist = t_min;
+      intObj = closest; 
+      intPoint = PVector.add(origin, PVector.mult(direction, t_min));
+      intNormal = PVector.sub(intObj.center, intPoint).normalize();
+      
+      return true;
     }
+    return false;
   }
   
   PVector cast(Object firstHitObject, PVector prevColor, int count) {
     PVector newColor = new PVector();
     
-    get_intersection();
-    
-    if (intersection_dist != 0) {      
-      if (count  < bounces) {
+    if (get_intersection()) {      
+      if (count < bounces) {
         
         if (count == 0) {
-          newColor = intersection_object.Color;
-          firstHitObject = intersection_object;
+          newColor = intObj.Color;
+          firstHitObject = intObj;
         } else { // Mixing current color with object-color
-          newColor = PVector.add(PVector.mult(intersection_object.Color, firstHitObject.gloss), PVector.mult(prevColor, 1-firstHitObject.gloss));
+          newColor = PVector.add(PVector.mult(intObj.Color, firstHitObject.gloss), PVector.mult(prevColor, 1-firstHitObject.gloss));
         }
       
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
-        PVector d = PVector.mult(direction, intersection_dist);
-        PVector intersection_vector = PVector.sub(PVector.mult(intersection_normal, 2 * PVector.dot(d, intersection_normal)), d);
+        PVector d = PVector.mult(direction, intDist);
+        PVector intersection_vector = PVector.sub(PVector.mult(intNormal, 2 * PVector.dot(d, intNormal)), d);
         
         // Calculating the successive ray's origin and direction
-        PVector rDirection = PVector.add(intersection_vector.normalize(), new PVector(random(-1, 1) * intersection_object.roughness, random(-1, 1) * intersection_object.roughness, random(-1, 1) * intersection_object.roughness)).normalize();
-        PVector rOrigin = PVector.add(intersection_point, PVector.mult(rDirection, 0.01)); // The successive ray gets a small offset 
+        PVector rDirection = PVector.add(intersection_vector.normalize(), new PVector(random(-1, 1) * intObj.roughness, random(-1, 1) * intObj.roughness, random(-1, 1) * intObj.roughness)).normalize();
+        PVector rOrigin = PVector.add(intPoint, PVector.mult(rDirection, 0.01)); // The successive ray gets a small offset 
         
         // Only cast the next ray if it doesn't point into the object
-        if (PVector.dot(rDirection, intersection_normal) >= 0) {
+        if (PVector.dot(rDirection, intNormal) >= 0) {
           Ray r = new Ray(rOrigin, rDirection);
           return r.cast(firstHitObject, newColor, count + 1);
         }
