@@ -3,7 +3,7 @@ PVector resolution = new PVector(1000, 1000);
 PVector bg_color = new PVector(0, 0, 0);
 
 Ray[] rays = new Ray[int(resolution.x * resolution.y)];
-Sphere[] spheres = new Sphere[3];
+Object[] objects = new Object[3];
 
 int bounces = 50;
 
@@ -14,12 +14,12 @@ public void settings(){
 }
 
 void setup() {
-  spheres[0] = new Sphere(new PVector(300, 2500, 3000), 2000, new PVector(72, 79, 84), 0.5, 0.8);
-  spheres[1] = new Sphere(new PVector(300, -2500, 3000), 2000, new PVector(255, 255, 255), 1, 0.3);
+  objects[0] = new Sphere(new PVector(300, 2500, 3000), 2000, new PVector(72, 79, 84), 0.5, 0.8);
+  objects[1] = new Sphere(new PVector(300, -2500, 3000), 2000, new PVector(255, 255, 255), 1, 0.3);
   
   
   // rote Kugel
-  spheres[2] = new Sphere(new PVector(300, 300, 3000), 200, new PVector(255, 0, 0), 0.3, 0.3);
+  objects[2] = new Sphere(new PVector(300, 300, 3000), 200, new PVector(255, 0, 0), 0.3, 0.3);
   
   
   //spheres[1] = new Sphere(new PVector(100, 50, 100), 50, new PVector(0, 200, 255), 0.6, 0.1);
@@ -63,18 +63,19 @@ class Ray {
     direction = direction_;
   }
   
-  // Class Functions
-  boolean get_intersection() {
+  boolean intGet() {
     float t_min = 0;
     Object closest = null;
   
-    for(Sphere sphere : spheres){
-      float t = sphere.calc_intersection_dist(this);
+    for(Object obj : objects){
+      float t = 0;
+      
+      t = obj.intDist(this);
       
       if( t != 0 ){ // hit
         if (t_min == 0 || t < t_min) {
           t_min = t;
-          closest = sphere;
+          closest = obj;
         }
       }
     }
@@ -93,7 +94,7 @@ class Ray {
   PVector cast(Object firstHitObject, PVector prevColor, int count) {
     PVector newColor = new PVector();
     
-    if (get_intersection()) {      
+    if (intGet()) {      
       if (count < bounces) {
         
         if (count == 0) {
@@ -118,9 +119,6 @@ class Ray {
         }
       }
       
-    } else {
-      // Mixing with black
-      //newColor = PVector.add(PVector.mult(bg_color, 0.7), PVector.mult(prevColor, 0.3));
     }
     
     // Returning final color
@@ -135,6 +133,10 @@ class Object {
   PVector Color;
   float roughness;
   float gloss;
+  
+  float intDist(Ray ray) {
+    return 0;
+  }
 }
 
 class Sphere extends Object{ 
@@ -148,7 +150,7 @@ class Sphere extends Object{
      gloss = gloss_;
    } 
    
-  float calc_intersection_dist(Ray ray){
+  float intDist(Ray ray){
     float t0;
     float t1;
     float t2;
