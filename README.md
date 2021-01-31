@@ -27,14 +27,15 @@ Raycasting in Processing Codebeispiel
 - √ Programmierung von einem sehr einfachen "ray-tracer", der die Objekte einfarbig und ohne Schatten darstellt
 - √ Implementierung von Schatten und Refletionen (Auftreff-winkel, ...)
 - √ Diffusion
-- Lampen-Objekt (im Grunde eine weiße Kugel, die die Farbe eines Reflection Rays aufhellt (weiß))
+- √ Lampen-Objekt (im Grunde eine weiße Kugel, die die Farbe eines Reflection Rays aufhellt (weiß))
+- √ Einstellbare Relfektivität von Objekten
 - FOV (field of view) (Rays in einem Winkel von der Kamera) => Perspektive
-- Einstellbare Relfektivität von Objekten
 - Unterschiedliche Arten von Objekten
 
 
 
 ### Protokoll
+(Alle Veränderungen / Updates auch unter Commits sichtbar)
 #### Di. 12.01.2021 - Anfängliche Orga
 Ergebnisse s. Oben ;)
 
@@ -68,3 +69,9 @@ Ergebnisse s. Oben ;)
 - Negative Normals gefixed, Normals, die in Kugeln waren gefixed
 - Cleanup
 - Object-Klasse
+- Objekt Reflektivität und Roughness
+
+#### So. 30.01.2021
+- Funktionen Objekt unabhängig gemacht
+- Extra Datein für Objekt- und Ray-Klassen
+- Cleanup (ray-array gelöscht und durch loop in draw() ersetzt)
