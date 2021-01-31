@@ -59,7 +59,7 @@ class Ray {
         PVector intersection_vector = PVector.sub(PVector.mult(intNormal, 2 * PVector.dot(d, intNormal)), d);
         
         // Calculating the successive ray's origin and direction
-        PVector rDirection = PVector.add(intersection_vector.normalize(), new PVector(random(-1, 1) * intObj.roughness, random(-1, 1) * intObj.roughness, random(-1, 1) * intObj.roughness)).normalize();
+        PVector rDirection = PVector.add(intersection_vector.normalize(), new PVector(random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness)).normalize();
         PVector rOrigin = PVector.add(intPoint, PVector.mult(rDirection, 0.01)); // The successive ray gets a small offset 
         
         // Only cast the next ray if it doesn't point into the object

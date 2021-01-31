@@ -1,9 +1,9 @@
-PVector resolution = new PVector(1000, 1000); 
+PVector resolution = new PVector(600, 600); 
 PVector bg_color = new PVector(0, 0, 0);
 
-Object[] objects = new Object[3];
+Object[] objects = new Object[2];
 
-int bounces = 50;
+int bounces = 5;
 
 public void settings(){
   size(int(resolution.x),int(resolution.y));
@@ -12,12 +12,12 @@ public void settings(){
 }
 
 void setup() {
-  objects[0] = new Sphere(new PVector(300, 2500, 3000), 2000, new PVector(72, 79, 84), 0.5, 0.8);
-  objects[1] = new Sphere(new PVector(300, -2500, 3000), 2000, new PVector(255, 255, 255), 1, 0.3);
+  //objects[0] = new Sphere(new PVector(300, 2500, 3000), 2000, new PVector(72, 79, 84), 0.5, 0.8);
+  objects[0] = new Sphere(new PVector(300, -2500, 3000), 2000, new PVector(255, 255, 255), 1, 0.3);
   
   
   // rote Kugel
-  objects[2] = new Sphere(new PVector(300, 300, 3000), 200, new PVector(255, 0, 0), 0.3, 0.3);
+  objects[1] = new Sphere(new PVector(300, 300, 3000), 200, new PVector(255, 0, 0), 0, 0.7);
   
   
   //spheres[1] = new Sphere(new PVector(100, 50, 100), 50, new PVector(0, 200, 255), 0.6, 0.1);
@@ -39,4 +39,7 @@ void draw() {
       
     }
   }
+  
+  // Done message with timer
+  print("done [" + millis()/1000 + "s " + (millis() - (millis()/1000 * 1000)) + "ms]");
 }
