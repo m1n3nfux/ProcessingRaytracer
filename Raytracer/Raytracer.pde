@@ -101,7 +101,7 @@ class Ray {
           newColor = intObj.Color;
           firstHitObject = intObj;
         } else { // Mixing current color with object-color
-          newColor = PVector.add(PVector.mult(intObj.Color, firstHitObject.gloss), PVector.mult(prevColor, 1-firstHitObject.gloss));
+          newColor = PVector.add(PVector.mult(intObj.Color, firstHitObject.reflectivity), PVector.mult(prevColor, 1-firstHitObject.reflectivity));
         }
       
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
@@ -132,7 +132,7 @@ class Object {
   
   PVector Color;
   float roughness;
-  float gloss;
+  float reflectivity;
   
   float intDist(Ray ray) {
     return 0;
@@ -142,12 +142,12 @@ class Object {
 class Sphere extends Object{ 
    int radius;
    
-   Sphere(PVector center_, int radius_, PVector color_, float roughness_, float gloss_){
+   Sphere(PVector center_, int radius_, PVector color_, float roughness_, float reflectivity_){
      center = center_;
      radius = radius_;
      Color = color_;
      roughness = roughness_;
-     gloss = gloss_;
+     reflectivity = reflectivity_;
    } 
    
   float intDist(Ray ray){
