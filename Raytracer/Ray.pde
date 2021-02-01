@@ -70,7 +70,6 @@ class Ray {
         
       }
     } else if (firstHitObject != null) {
-      println("hello");
       newColor = PVector.add(PVector.mult(bg_color, firstHitObject.reflectivity), PVector.mult(prevColor, 1-firstHitObject.reflectivity));
     }
     // Returning final color
