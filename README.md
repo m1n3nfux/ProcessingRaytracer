@@ -31,6 +31,7 @@ Raycasting in Processing Codebeispiel
 - √ Einstellbare Relfektivität von Objekten
 - FOV (field of view) (Rays in einem Winkel von der Kamera) => Perspektive
 - Unterschiedliche Arten von Objekten
+- Bewegbare Kamera (Direction, Rotation, ...)
 
 
 
