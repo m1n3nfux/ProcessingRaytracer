@@ -1,5 +1,5 @@
 class Object {
-  PVector center;
+  PVector origin;
   
   PVector Color;
   float roughness;
@@ -13,8 +13,8 @@ class Object {
 class Sphere extends Object{ 
    int radius;
    
-   Sphere(PVector center_, int radius_, PVector color_, float roughness_, float reflectivity_){
-     center = center_;
+   Sphere(PVector origin_, int radius_, PVector color_, float roughness_, float reflectivity_){
+     origin = origin_;
      radius = radius_;
      Color = color_;
      roughness = roughness_;
@@ -28,8 +28,8 @@ class Sphere extends Object{
     
     // formeln von scratchapixel.com
     float a = pow(ray.direction.mag(), 2);
-    float b = PVector.mult(ray.direction, 2).dot(PVector.sub(ray.origin, center));
-    float c = pow((PVector.sub(ray.origin, center).mag()), 2) - pow(radius, 2);
+    float b = PVector.mult(ray.direction, 2).dot(PVector.sub(ray.origin, origin));
+    float c = pow((PVector.sub(ray.origin, origin).mag()), 2) - pow(radius, 2);
     
     float delta = pow(b, 2) - 4 * a * c;
     if( delta > 0){ // 2 intersections
@@ -51,5 +51,21 @@ class Sphere extends Object{
     }
     
     return t0;
+  }
+}
+
+class Plane extends Object{
+  PVector dimensions;
+  PVector rotation;
+  Plane(PVector origin_, PVector dimensions_, PVector rotation_, PVector color_, float roughness_, float reflectivity_){
+    origin = origin_;
+    dimensions = dimensions_;
+    rotation = rotation_;
+    Color = color_;
+    roughness = roughness_;
+    reflectivity = reflectivity_;
+  }
+  
+  void calc_points(){ //calculate points from origin, dimension & rotation
   }
 }

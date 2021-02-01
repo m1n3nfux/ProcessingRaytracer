@@ -34,7 +34,7 @@ class Ray {
       intDist = t_min;
       intObj = closest; 
       intPoint = PVector.add(origin, PVector.mult(direction, t_min));
-      intNormal = PVector.sub(intObj.center, intPoint).normalize();
+      intNormal = PVector.sub(intObj.origin, intPoint).normalize();
       
       return true;
     }
@@ -42,9 +42,8 @@ class Ray {
   }
   
   PVector cast(Object firstHitObject, PVector prevColor, int count) {
-    PVector newColor = new PVector();
-    
-    if (intGet()) {      
+    PVector newColor = bg_color;
+    if (intGet()) {  
       if (count < bounces) {
         
         if (count == 0) {
@@ -67,10 +66,13 @@ class Ray {
           Ray r = new Ray(rOrigin, rDirection);
           return r.cast(firstHitObject, newColor, count + 1);
         }
+      } else if (count == bounces) {
+        
       }
-      
+    } else if (firstHitObject != null) {
+      println("hello");
+      newColor = PVector.add(PVector.mult(bg_color, firstHitObject.reflectivity), PVector.mult(prevColor, 1-firstHitObject.reflectivity));
     }
-    
     // Returning final color
     return newColor;
   }
