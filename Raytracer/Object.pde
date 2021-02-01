@@ -53,3 +53,8 @@ class Sphere extends Object{
     return t0;
   }
 }
+
+class plane extends Object{
+  
+  
+}
