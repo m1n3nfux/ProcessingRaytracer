@@ -80,3 +80,4 @@ Ergebnisse s. Oben ;)
 - Rays können mit Background kollidieren -> Hintergrundfarbe beeinflusst Szene
 - Plane-Klasse erstellt und mit Variablen gefüllt
 - Renderer von Punkte zeichnen auf PImage geupgraded -> verbesserung der Renderzeit & export als jpg
+- Supersampling implementiert
