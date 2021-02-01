@@ -76,6 +76,6 @@ Ergebnisse s. Oben ;)
 - Extra Datein für Objekt- und Ray-Klassen
 - Cleanup (ray-array gelöscht und durch loop in draw() ersetzt)
 
-### Mo. 01.02.2021
+#### Mo. 01.02.2021
 - Rays können mit Background kollidieren -> Hintergrundfarbe beeinflusst Szene
 - Plane-Klasse erstellt und mit Variablen gefüllt
