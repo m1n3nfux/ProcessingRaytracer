@@ -1,5 +1,5 @@
 PVector resolution = new PVector(600, 600); 
-PVector bg_color = new PVector(255, 255, 255);
+PVector bg_color = new PVector(150, 150, 150);
 
 Object[] objects = new Object[3];
 
@@ -16,14 +16,14 @@ void setup() {
   //objects[0] = new Sphere(new PVector(300, 2500, 3000), 2000, new PVector(72, 79, 84), 0.5, 0.8);
   
   //light source
-  objects[0] = new Sphere(new PVector(300, -2000, 3000), 2000, new PVector(255, 255, 255), 0, 1);
+  objects[2] = new Sphere(new PVector(300, -500, 1200), 500, new PVector(255, 255, 255), 0, 1);
   
   
   //small sphere
-  objects[1] = new Sphere(new PVector(300, 200, 3000), 150, new PVector(50, 50, 50), 0.01, 1);
+  objects[0] = new Sphere(new PVector(300, 200, 1200), 150, new PVector(0, 0, 0), 0.01, 0.9);
   
   //big sphere (subsoil)
-  objects[2] = new Sphere(new PVector(300,12350, 3000), 12000, new PVector(50,50,50), 0.1, 0.3);
+  objects[1] = new Sphere(new PVector(300,1550, 1200), 1200, new PVector(50,50,50), 0.03, 0.5);
   
   //spheres[1] = new Sphere(new PVector(100, 50, 100), 50, new PVector(0, 200, 255), 0.6, 0.1);
   //spheres[2] = new Sphere(new PVector(500, 50, 100), 50, new PVector(0, 200, 255), 0.7, 0.9);

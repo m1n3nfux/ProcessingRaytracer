@@ -42,7 +42,7 @@ class Ray {
   }
   
   PVector cast(Object firstHitObject, PVector prevColor, int count) {
-    PVector newColor = new PVector();
+    PVector newColor = bg_color;
     if (intGet()) {  
       if (count < bounces) {
         
