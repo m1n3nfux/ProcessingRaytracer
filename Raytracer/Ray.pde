@@ -43,8 +43,7 @@ class Ray {
   
   PVector cast(Object firstHitObject, PVector prevColor, int count) {
     PVector newColor = new PVector();
-    
-    if (intGet()) {      
+    if (intGet()) {  
       if (count < bounces) {
         
         if (count == 0) {
@@ -67,9 +66,10 @@ class Ray {
           Ray r = new Ray(rOrigin, rDirection);
           return r.cast(firstHitObject, newColor, count + 1);
         }
+      } else if (count == bounces) {
+        newColor = PVector.add(PVector.mult(bg_color, firstHitObject.reflectivity), PVector.mult(prevColor, 1-firstHitObject.reflectivity));
       }
-      
-    }
+    } 
     
     // Returning final color
     return newColor;
