@@ -3,6 +3,8 @@ PVector bg_color = new PVector(50, 50, 50);
 
 Object[] objects = new Object[3];
 
+PImage img = createImage(int(resolution.x), int(resolution.y), RGB);
+
 int bounces = 2;
 
 public void settings(){
@@ -31,6 +33,8 @@ void setup() {
 
 
 void draw() {
+  img.loadPixels();
+  
   // Sending a Ray for every pixel
   for (int x = 0; x < resolution.x; x++) {
     for (int y = 0; y < resolution.y; y++) {
@@ -39,8 +43,9 @@ void draw() {
       PVector rColor = r.cast(null, new PVector(), 0);
       
       // Drawing the pixel
-      stroke(rColor.x, rColor.y, rColor.z);
-      point(r.origin.x, r.origin.y);
+      img.pixels[x*y] = color(rColor.x, rColor.y, rColor.z);
+      //stroke(rColor.x, rColor.y, rColor.z);
+      //point(r.origin.x, r.origin.y);
       
     }
     //bg_color.add(new PVector(width/255, width/255, width/255));
