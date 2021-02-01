@@ -1,9 +1,9 @@
 PVector resolution = new PVector(600, 600); 
-PVector bg_color = new PVector(150, 150, 150);
+PVector bg_color = new PVector(50, 50, 50);
 
 Object[] objects = new Object[3];
 
-int bounces = 200;
+int bounces = 2;
 
 public void settings(){
   size(int(resolution.x),int(resolution.y));
@@ -20,10 +20,10 @@ void setup() {
   
   
   //small sphere
-  objects[0] = new Sphere(new PVector(300, 200, 1200), 150, new PVector(0, 0, 0), 0.01, 0.7);
+  objects[0] = new Sphere(new PVector(300, 200, 1200), 150, new PVector(100, 100, 100), 0.3, 0.7);
   
   //big sphere (subsoil)
-  objects[1] = new Sphere(new PVector(300,1550, 1200), 1200, new PVector(255,255,0), 0.03, 0.5);
+  objects[1] = new Sphere(new PVector(300,1550, 1200), 1200, new PVector(255,255,0), 0.2, 0.5);
   
   //spheres[1] = new Sphere(new PVector(100, 50, 100), 50, new PVector(0, 200, 255), 0.6, 0.1);
   //spheres[2] = new Sphere(new PVector(500, 50, 100), 50, new PVector(0, 200, 255), 0.7, 0.9);
@@ -43,6 +43,7 @@ void draw() {
       point(r.origin.x, r.origin.y);
       
     }
+    //bg_color.add(new PVector(width/255, width/255, width/255));
   }
   
   // Done message with timer
