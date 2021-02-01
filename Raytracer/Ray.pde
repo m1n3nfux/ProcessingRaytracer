@@ -47,10 +47,10 @@ class Ray {
       if (count < bounces) {
         
         if (count == 0) {
-          newColor = intObj.Color;
+          newColor = intObj.c;
           firstHitObject = intObj;
         } else { // Mixing current color with object-color
-          newColor = PVector.add(PVector.mult(intObj.Color, firstHitObject.reflectivity), PVector.mult(prevColor, 1-firstHitObject.reflectivity));
+          newColor = PVector.add(PVector.mult(intObj.c, firstHitObject.reflectivity), PVector.mult(prevColor, 1-firstHitObject.reflectivity));
         }
       
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
