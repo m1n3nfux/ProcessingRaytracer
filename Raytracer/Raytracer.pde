@@ -42,14 +42,18 @@ void draw() {
       Ray r = new Ray( new PVector(x, y, 0), new PVector(0, 0, 1));
       PVector rColor = r.cast(null, new PVector(), 0);
       
-      // Drawing the pixel
-      img.pixels[x*y] = color(rColor.x, rColor.y, rColor.z);
-      //stroke(rColor.x, rColor.y, rColor.z);
-      //point(r.origin.x, r.origin.y);
+      // Adding pixel to image
+      img.pixels[int(y * resolution.x) + x] = color(rColor.x, rColor.y, rColor.z);
       
     }
-    //bg_color.add(new PVector(width/255, width/255, width/255));
   }
+  
+  // Displaying the image
+  img.updatePixels();
+  image(img, 0, 0);
+  
+  // Saving the image
+  img.save("output.jpg");
   
   // Done message with timer
   print("done [" + millis()/1000 + "s " + (millis() - (millis()/1000 * 1000)) + "ms]");
