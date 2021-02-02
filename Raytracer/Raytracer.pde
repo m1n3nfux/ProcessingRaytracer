@@ -1,4 +1,4 @@
-PVector resolution = new PVector(10, 10); 
+PVector resolution = new PVector(800, 800); 
 PVector bg_color = new PVector(150, 150, 150);
 
 Object[] objects;
@@ -7,8 +7,6 @@ PImage img = createImage(int(resolution.x), int(resolution.y), RGB);
 
 int bounces = 20;
 PVector density = new PVector(1, 1);
-int f = 0;
-int g = 0;
 
 public void settings(){
   size(int(resolution.x),int(resolution.y));
@@ -28,7 +26,7 @@ void setup() {
     
     new Sphere(new PVector(400, 200, 500), 150, new PVector(190, 210, 255), 0, 0.7), // Small sphere
     
-    new Plane(new PVector(400, 800, 0), new PVector(200,100,100), 1, 1) // (subsoil)
+    new Plane(new PVector(400, 200, 650), new PVector(200,100,100), 1, 1) // (subsoil)
   };
   
   //objects[1] = new Sphere(new PVector(300,1550, 1200), 1200, new PVector(200,100,100), 0.2, 0.5);
@@ -45,12 +43,16 @@ void draw() {
   // Sending a Ray for every pixel
   for (int x = 0; x < resolution.x; x++) {
     for (int y = 0; y < resolution.y; y++) {
-      g++;
+      
       PVector renderColor = new PVector();
       color c;
       for (int a = 0; a < density.x; a++) {
         for (int b = 0; b < density.y; b++) {
-          Ray r = new Ray( new PVector(x + a/(density.x), y + b/(density.y), 0), new PVector(0, 0, 1));
+          
+          Ray r = new Ray(
+            new PVector(x + a/(density.x), y + b/(density.y), 0), 
+            new PVector(0, 0, 1)
+          );
           
           if(a == 0 && b==0 && r.intGet() == false){
             renderColor = PVector.mult(bg_color, density.x * density.y);
@@ -60,8 +62,6 @@ void draw() {
           }
           else {
             PVector col = r.cast(null, new PVector(), 0);
-            f++;
-            //println(col);
             renderColor.add(col);
             
           }
@@ -99,5 +99,5 @@ void draw() {
   
   // Done message with timer
   println("done [" + millis()/1000 + "s " + (millis() - (millis()/1000 * 1000)) + "ms]");
-  println(g + " pixels rendered, using " + f + " rays. (" + int(density.x * density.y) + " rays per pixel)");
+  println(int(resolution.x * resolution.y) + " pixels rendered, using " + int((resolution.x * resolution.y) * (density.x * density.y)) + " rays. (" + int(density.x * density.y) + " rays per pixel)");
 }

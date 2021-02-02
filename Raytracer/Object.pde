@@ -65,7 +65,7 @@ class Plane extends Object {
   PVector dimensions;
   PVector rotation;
 
-  PVector normal = new PVector(0, 1, 0);
+  PVector normal = new PVector(0, 1, -1);
 
   Plane(PVector origin_, PVector dimensions_, PVector rotation_, PVector c_, float roughness_, float reflectivity_) {
     origin = origin_;
@@ -87,7 +87,12 @@ class Plane extends Object {
     //println(PVector.dot(PVector.sub(origin, ray.origin), normal));
     //println(PVector.dot(ray.direction, normal), ray.direction, normal);
     float b = PVector.dot(ray.direction, normal);
-    return PVector.dot(PVector.sub(origin, ray.origin), normal) / PVector.dot(ray.direction, normal);
+    
+    if (b != 0) {
+      return PVector.dot(PVector.sub(origin, ray.origin), normal) / b;
+    }
+    
+    return 0;
   }
   
   PVector getIntNormal(Ray ray) {
