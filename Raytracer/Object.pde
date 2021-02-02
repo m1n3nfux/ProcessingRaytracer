@@ -1,7 +1,7 @@
 class Object {
   PVector origin;
   
-  PVector Color;
+  PVector c;
   float roughness;
   float reflectivity;
   
@@ -13,10 +13,10 @@ class Object {
 class Sphere extends Object{ 
    int radius;
    
-   Sphere(PVector origin_, int radius_, PVector color_, float roughness_, float reflectivity_){
+   Sphere(PVector origin_, int radius_, PVector c_, float roughness_, float reflectivity_){
      origin = origin_;
      radius = radius_;
-     Color = color_;
+     c = c_;
      roughness = roughness_;
      reflectivity = reflectivity_;
    } 
@@ -57,11 +57,11 @@ class Sphere extends Object{
 class Plane extends Object{
   PVector dimensions;
   PVector rotation;
-  Plane(PVector origin_, PVector dimensions_, PVector rotation_, PVector color_, float roughness_, float reflectivity_){
+  Plane(PVector origin_, PVector dimensions_, PVector rotation_, PVector c_, float roughness_, float reflectivity_){
     origin = origin_;
     dimensions = dimensions_;
     rotation = rotation_;
-    Color = color_;
+    c = c_;
     roughness = roughness_;
     reflectivity = reflectivity_;
   }

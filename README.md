@@ -31,6 +31,7 @@ Raycasting in Processing Codebeispiel
 - √ Einstellbare Relfektivität von Objekten
 - FOV (field of view) (Rays in einem Winkel von der Kamera) => Perspektive
 - Unterschiedliche Arten von Objekten
+- Bewegbare Kamera (Direction, Rotation, ...)
 
 
 
@@ -80,3 +81,4 @@ Ergebnisse s. Oben ;)
 - Rays können mit Background kollidieren -> Hintergrundfarbe beeinflusst Szene
 - Plane-Klasse erstellt und mit Variablen gefüllt
 - Renderer von Punkte zeichnen auf PImage geupgraded -> verbesserung der Renderzeit & export als jpg
+- Supersampling implementiert
