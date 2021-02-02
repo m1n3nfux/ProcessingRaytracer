@@ -32,9 +32,9 @@ class Ray {
     
     if (t_min != 0) {
       intDist = t_min;
-      intObj = closest; 
-      intPoint = PVector.add(origin, PVector.mult(direction, t_min));
-      intNormal = PVector.sub(intObj.origin, intPoint).normalize();
+      intObj = closest;
+      intPoint = PVector.add(origin, PVector.mult(direction, intDist));
+      intNormal = intObj.getIntNormal(this);
       
       return true;
     }
@@ -43,7 +43,8 @@ class Ray {
   
   PVector cast(Object firstHitObject, PVector prevColor, int count) {
     PVector newColor = bg_color;
-    if (intGet()) {  
+    
+    if (intGet()) {
       if (count < bounces) {
         
         if (count == 0) {
@@ -56,6 +57,7 @@ class Ray {
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
         PVector d = PVector.mult(direction, intDist);
         PVector intersection_vector = PVector.sub(PVector.mult(intNormal, 2 * PVector.dot(d, intNormal)), d);
+        //println(intPoint);
         
         // Calculating the successive ray's origin and direction
         PVector rDirection = PVector.add(intersection_vector.normalize(), new PVector(random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness)).normalize();
