@@ -84,12 +84,13 @@ class Plane extends Object {
   }
 
   float intDist(Ray ray) {
-    //println(PVector.dot(PVector.sub(origin, ray.origin), normal));
-    //println(PVector.dot(ray.direction, normal), ray.direction, normal);
+    float a = PVector.dot(PVector.sub(origin, ray.origin), normal);
     float b = PVector.dot(ray.direction, normal);
     
     if (b != 0) {
-      return PVector.dot(PVector.sub(origin, ray.origin), normal) / b;
+      if (a/b > 0) {
+        return a / b;
+      }
     }
     
     return 0;

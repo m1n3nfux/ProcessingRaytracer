@@ -1,13 +1,13 @@
 PVector resolution = new PVector(800, 800); 
 float FOV = 90; // in degrees; max is 90
 
-PVector bg_color = new PVector(150, 150, 150);
+PVector bg_color = new PVector(255, 255, 255);
 
 
 PImage img = createImage(int(resolution.x), int(resolution.y), RGB);
 
 int bounces = 20;
-PVector density = new PVector(1, 1);
+PVector density = new PVector(5, 5);
 
 Object[] objects;
 
@@ -25,12 +25,11 @@ void setup() {
   
   //light source
   objects = new Object[] {
-    new Sphere(new PVector(300, -500, 700), 500, new PVector(255, 255, 255), 0, 0), // Light
+    //new Sphere(new PVector(300, -850, 0), 500, new PVector(255, 255, 255), 0, 0), // Light
+    new Plane(new PVector(400, 600, 0), new PVector(200, 100, 100), 0, 0.7), // (subsoil)
     
-    new Sphere(new PVector(600, 300, 300), 250, new PVector(190, 210, 255), 0, 0.7), // Small sphere
-    new Sphere(new PVector(400, 200, 500), 150, new PVector(190, 210, 255), 0, 0.7), // Small sphere
-    
-    //new Plane(new PVector(400, 600, 3), new PVector(200,100,100), 1, 1) // (subsoil)
+    new Sphere(new PVector(400, 300, 600), 250, new PVector(46, 259, 151), 0.03, 0.7), // Small sphere
+    new Sphere(new PVector(700, 400, 250), 250, new PVector(46, 215, 187), 0.03, 0), // Small sphere
   };
   
   // Converting FOV from degrees to 0, 1
