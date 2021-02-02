@@ -82,3 +82,9 @@ Ergebnisse s. Oben ;)
 - Plane-Klasse erstellt und mit Variablen gefüllt
 - Renderer von Punkte zeichnen auf PImage geupgraded -> verbesserung der Renderzeit & export als jpg
 - Supersampling implementiert
+
+#### Di. 02.02.2021
+- Planes sind jetzt darstellbar
+- Cleanup
+- FOV implementiert
+- Fehler bei der Reihenfolge von Reflektionen gefunden (https://imgur.com/lLMV2C9, https://imgur.com/a/J4LLrir)
