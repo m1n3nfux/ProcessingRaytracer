@@ -1,14 +1,15 @@
-PVector resolution = new PVector(800, 800); 
+PVector resolution = new PVector(10, 10); 
 PVector bg_color = new PVector(150, 150, 150);
 
-Object[] objects = new Object[3];
+Object[] objects;
 
 PImage img = createImage(int(resolution.x), int(resolution.y), RGB);
 
-int bounces = 3;
-PVector density = new PVector(2, 2);
+int bounces = 20;
+PVector density = new PVector(1, 1);
 int f = 0;
 int g = 0;
+
 public void settings(){
   size(int(resolution.x),int(resolution.y));
   //fullScreen();
@@ -22,14 +23,14 @@ void setup() {
   //objects[0] = new Sphere(new PVector(300, 2500, 3000), 2000, new PVector(72, 79, 84), 0.5, 0.8);
   
   //light source
-  objects[2] = new Sphere(new PVector(300, -500, 1200), 500, new PVector(255, 255, 255), 0, 1);
+  objects = new Object[] {
+    new Sphere(new PVector(300, -500, 700), 500, new PVector(255, 255, 255), 0, 0), // Light
+    
+    new Sphere(new PVector(400, 200, 500), 150, new PVector(190, 210, 255), 0, 0.7), // Small sphere
+    
+    new Plane(new PVector(400, 800, 0), new PVector(200,100,100), 1, 1) // (subsoil)
+  };
   
-  
-  //small sphere
-  objects[0] = new Sphere(new PVector(400, 400, 200), 150, new PVector(190, 210, 255), 0, 0.7);
-  
-  //big sphere (subsoil)
-  objects[1] = new Plane(new PVector(400, 600, 0), new PVector(200,100,100), 0, 0.5);
   //objects[1] = new Sphere(new PVector(300,1550, 1200), 1200, new PVector(200,100,100), 0.2, 0.5);
   
   //objects[3] = new Sphere(new PVector(6000, 1000, 1200), 4000, new PVector(255,255,255), 1,1);
@@ -98,5 +99,5 @@ void draw() {
   
   // Done message with timer
   println("done [" + millis()/1000 + "s " + (millis() - (millis()/1000 * 1000)) + "ms]");
-  println(g + " pixels rendered, using " + f + " rays. (" + density + " rays per pixel)");
+  println(g + " pixels rendered, using " + f + " rays. (" + int(density.x * density.y) + " rays per pixel)");
 }

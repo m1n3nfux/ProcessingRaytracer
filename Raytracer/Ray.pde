@@ -57,10 +57,18 @@ class Ray {
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
         PVector d = PVector.mult(direction, intDist);
         PVector intersection_vector = PVector.sub(PVector.mult(intNormal, 2 * PVector.dot(d, intNormal)), d);
-        //println(intPoint);
+        
+        //println(direction, intDist);
+        //println(direction, intersection_vector);
         
         // Calculating the successive ray's origin and direction
-        PVector rDirection = PVector.add(intersection_vector.normalize(), new PVector(random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness)).normalize();
+        // The roughness-factor controls the amount of surface scattering (randomness of reflection-direction)
+        PVector rDirection = 
+          PVector.add(
+            intersection_vector.normalize(), 
+            new PVector(random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness)
+          ).normalize();
+        
         PVector rOrigin = PVector.add(intPoint, PVector.mult(rDirection, 0.01)); // The successive ray gets a small offset 
         
         // Only cast the next ray if it doesn't point into the object
