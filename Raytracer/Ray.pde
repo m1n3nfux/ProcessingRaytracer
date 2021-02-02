@@ -50,9 +50,10 @@ class Ray {
           newColor = intObj.c;
           firstHitObject = intObj;
         } else { // Mixing current color with object-color
+        // only add color when next object has emission > 0
           newColor = PVector.add(PVector.mult(intObj.c, firstHitObject.reflectivity), PVector.mult(prevColor, 1-firstHitObject.reflectivity));
         }
-      
+        
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
         PVector d = PVector.mult(direction, intDist);
         PVector intersection_vector = PVector.sub(PVector.mult(intNormal, 2 * PVector.dot(d, intNormal)), d);

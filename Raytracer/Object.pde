@@ -4,7 +4,7 @@ class Object {
   PVector c;
   float roughness;
   float reflectivity;
-  
+  float emission;
   float intDist(Ray ray) {
     return 0;
   }
@@ -13,12 +13,13 @@ class Object {
 class Sphere extends Object{ 
    int radius;
    
-   Sphere(PVector origin_, int radius_, PVector c_, float roughness_, float reflectivity_){
+   Sphere(PVector origin_, int radius_, PVector c_, float roughness_, float reflectivity_, float emission_){
      origin = origin_;
      radius = radius_;
      c = c_;
      roughness = roughness_;
      reflectivity = reflectivity_;
+     emission = emission_;
    } 
    
   float intDist(Ray ray){
