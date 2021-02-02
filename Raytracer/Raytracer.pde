@@ -1,12 +1,12 @@
 PVector resolution = new PVector(800, 800); 
 PVector bg_color = new PVector(150, 150, 150);
 
-Object[] objects;
-
 PImage img = createImage(int(resolution.x), int(resolution.y), RGB);
 
 int bounces = 20;
 PVector density = new PVector(1, 1);
+
+Object[] objects;
 
 public void settings(){
   size(int(resolution.x),int(resolution.y));
@@ -30,10 +30,6 @@ void setup() {
   };
   
   //objects[1] = new Sphere(new PVector(300,1550, 1200), 1200, new PVector(200,100,100), 0.2, 0.5);
-  
-  //objects[3] = new Sphere(new PVector(6000, 1000, 1200), 4000, new PVector(255,255,255), 1,1);
-  //spheres[1] = new Sphere(new PVector(100, 50, 100), 50, new PVector(0, 200, 255), 0.6, 0.1);
-  //spheres[2] = new Sphere(new PVector(500, 50, 100), 50, new PVector(0, 200, 255), 0.7, 0.9);
 }
 
 
