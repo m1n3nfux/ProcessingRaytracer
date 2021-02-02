@@ -1,5 +1,8 @@
 PVector resolution = new PVector(800, 800); 
+float FOV = 90; // in degrees; max is 90
+
 PVector bg_color = new PVector(150, 150, 150);
+
 
 PImage img = createImage(int(resolution.x), int(resolution.y), RGB);
 
@@ -24,10 +27,14 @@ void setup() {
   objects = new Object[] {
     new Sphere(new PVector(300, -500, 700), 500, new PVector(255, 255, 255), 0, 0), // Light
     
+    new Sphere(new PVector(600, 300, 300), 250, new PVector(190, 210, 255), 0, 0.7), // Small sphere
     new Sphere(new PVector(400, 200, 500), 150, new PVector(190, 210, 255), 0, 0.7), // Small sphere
     
-    new Plane(new PVector(400, 200, 650), new PVector(200,100,100), 1, 1) // (subsoil)
+    //new Plane(new PVector(400, 600, 3), new PVector(200,100,100), 1, 1) // (subsoil)
   };
+  
+  // Converting FOV from degrees to 0, 1
+  FOV = map(FOV, 0, 90, 0, 1);
   
   //objects[1] = new Sphere(new PVector(300,1550, 1200), 1200, new PVector(200,100,100), 0.2, 0.5);
 }
@@ -47,7 +54,7 @@ void draw() {
           
           Ray r = new Ray(
             new PVector(x + a/(density.x), y + b/(density.y), 0), 
-            new PVector(0, 0, 1)
+            new PVector( map(x, 0, resolution.x, -FOV, FOV) , map(y, 0, resolution.y, -FOV, FOV), 1)
           );
           
           if(a == 0 && b==0 && r.intGet() == false){

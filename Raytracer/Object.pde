@@ -65,7 +65,7 @@ class Plane extends Object {
   PVector dimensions;
   PVector rotation;
 
-  PVector normal = new PVector(0, 1, -1);
+  PVector normal = new PVector(0, 1, 0);
 
   Plane(PVector origin_, PVector dimensions_, PVector rotation_, PVector c_, float roughness_, float reflectivity_) {
     origin = origin_;
