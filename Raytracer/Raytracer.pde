@@ -1,5 +1,5 @@
 PVector resolution = new PVector(800, 800); 
-float FOV = 90; // in degrees; max is 90
+float FOV = 40; // in degrees; max is 90
 
 PVector bg_color = new PVector(255, 255, 255);
 
@@ -19,23 +19,19 @@ public void settings(){
 }
 
 void setup() {
+  int r_ = 10000;
   
-  // sphere(PVector(coordinates), radius, PVector(color), roughness, reflectivity);
-  //objects[0] = new Sphere(new PVector(300, 2500, 3000), 2000, new PVector(72, 79, 84), 0.5, 0.8);
-  
-  //light source
   objects = new Object[] {
     //new Sphere(new PVector(300, -850, 0), 500, new PVector(255, 255, 255), 0, 0), // Light
-    new Plane(new PVector(400, 600, 0), new PVector(200, 100, 100), 0, 0.7), // (subsoil)
+    //new Plane(new PVector(400, 800, 0), new PVector(200, 100, 100), 0, 0.7), // (subsoil)
+    new Sphere(new PVector(400, 600+r_, r_ / 4), r_, new PVector(200, 100, 100), 0, 1),
     
-    new Sphere(new PVector(400, 300, 600), 250, new PVector(46, 259, 151), 0.03, 0.7), // Small sphere
-    new Sphere(new PVector(700, 400, 250), 250, new PVector(46, 215, 187), 0.03, 0), // Small sphere
+    new Sphere(new PVector(700, 500, 650), 250, new PVector(46, 215, 187), 0.5, 0), // Small sphere
+    new Sphere(new PVector(400, 500, 1200), 250, new PVector(46, 259, 151), 0.5, 0.7), // Small sphere
   };
   
   // Converting FOV from degrees to 0, 1
   FOV = map(FOV, 0, 90, 0, 1);
-  
-  //objects[1] = new Sphere(new PVector(300,1550, 1200), 1200, new PVector(200,100,100), 0.2, 0.5);
 }
 
 
