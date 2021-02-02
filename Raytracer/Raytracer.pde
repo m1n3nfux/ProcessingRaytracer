@@ -1,14 +1,16 @@
-PVector resolution = new PVector(600, 600); 
-PVector bg_color = new PVector(150, 150, 150);
+PVector resolution = new PVector(800, 800); 
+float FOV = 40; // in degrees; max is 90
 
-Object[] objects = new Object[4];
+PVector bg_color = new PVector(255, 255, 255);
+
 
 PImage img = createImage(int(resolution.x), int(resolution.y), RGB);
 
-int bounces = 3;
-PVector density = new PVector(10, 10);
-int f = 0;
-int g = 0;
+int bounces = 20;
+PVector density = new PVector(5, 5);
+
+Object[] objects;
+
 public void settings(){
   size(int(resolution.x),int(resolution.y));
   //fullScreen();
@@ -17,23 +19,19 @@ public void settings(){
 }
 
 void setup() {
+  int r_ = 10000;
   
-  // sphere(PVector(coordinates), radius, PVector(color), roughness, reflectivity);
-  //objects[0] = new Sphere(new PVector(300, 2500, 3000), 2000, new PVector(72, 79, 84), 0.5, 0.8);
+  objects = new Object[] {
+    //new Sphere(new PVector(300, -850, 0), 500, new PVector(255, 255, 255), 0, 0), // Light
+    //new Plane(new PVector(400, 800, 0), new PVector(200, 100, 100), 0, 0.7), // (subsoil)
+    new Sphere(new PVector(400, 600+r_, r_ / 4), r_, new PVector(200, 100, 100), 0, 1),
+    
+    new Sphere(new PVector(700, 500, 650), 250, new PVector(46, 215, 187), 0.5, 0), // Small sphere
+    new Sphere(new PVector(400, 500, 1200), 250, new PVector(46, 259, 151), 0.5, 0.7), // Small sphere
+  };
   
-  //light source
-  objects[2] = new Sphere(new PVector(300, -500, 1200), 500, new PVector(255, 255, 255), 1, 1);
-  
-  
-  //small sphere
-  objects[0] = new Sphere(new PVector(300, 200, 1200), 150, new PVector(190, 210, 255), 0, 0.7);
-  
-  //big sphere (subsoil)
-  objects[1] = new Sphere(new PVector(300,1550, 1200), 1200, new PVector(100,100,100), 0.2, 0.5);
-  
-  objects[3] = new Sphere(new PVector(6000, 1000, 1200), 4000, new PVector(255,255,255), 1,1);
-  //spheres[1] = new Sphere(new PVector(100, 50, 100), 50, new PVector(0, 200, 255), 0.6, 0.1);
-  //spheres[2] = new Sphere(new PVector(500, 50, 100), 50, new PVector(0, 200, 255), 0.7, 0.9);
+  // Converting FOV from degrees to 0, 1
+  FOV = map(FOV, 0, 90, 0, 1);
 }
 
 
@@ -43,12 +41,16 @@ void draw() {
   // Sending a Ray for every pixel
   for (int x = 0; x < resolution.x; x++) {
     for (int y = 0; y < resolution.y; y++) {
-      g++;
+      
       PVector renderColor = new PVector();
       color c;
       for (int a = 0; a < density.x; a++) {
         for (int b = 0; b < density.y; b++) {
-          Ray r = new Ray( new PVector(x + a/(density.x), y + b/(density.y), 0), new PVector(0, 0, 1));
+          
+          Ray r = new Ray(
+            new PVector(x + a/(density.x), y + b/(density.y), 0), 
+            new PVector( map(x, 0, resolution.x, -FOV, FOV) , map(y, 0, resolution.y, -FOV, FOV), 1)
+          );
           
           if(a == 0 && b==0 && r.intGet() == false){
             renderColor = PVector.mult(bg_color, density.x * density.y);
@@ -58,8 +60,6 @@ void draw() {
           }
           else {
             PVector col = r.cast(null, new PVector(), 0);
-            f++;
-            //println(col);
             renderColor.add(col);
             
           }
@@ -70,10 +70,8 @@ void draw() {
       //println(red(c), green(c), blue(c));
       img.pixels[int(y * resolution.x) + x] = c; // Adding pixel to image
       
-    
     }
   }
-  
   
   /*
   Ray r = new Ray( new PVector(x + a/(density/2), y + b/(density/2), 0), new PVector(0, 0, 1));
@@ -95,9 +93,9 @@ void draw() {
   image(img, 0, 0);
   
   // Saving the image
-  img.save("output.jpg");
+  //img.save("output.jpg");
   
   // Done message with timer
   println("done [" + millis()/1000 + "s " + (millis() - (millis()/1000 * 1000)) + "ms]");
-  println(g + " pixels rendered, using " + f + " rays. (" + density + " rays per pixel)");
+  println(int(resolution.x * resolution.y) + " pixels rendered, using " + int((resolution.x * resolution.y) * (density.x * density.y)) + " rays. (" + int(density.x * density.y) + " rays per pixel)");
 }

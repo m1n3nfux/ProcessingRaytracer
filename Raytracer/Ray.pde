@@ -32,9 +32,9 @@ class Ray {
     
     if (t_min != 0) {
       intDist = t_min;
-      intObj = closest; 
-      intPoint = PVector.add(origin, PVector.mult(direction, t_min));
-      intNormal = PVector.sub(intObj.origin, intPoint).normalize();
+      intObj = closest;
+      intPoint = PVector.add(origin, PVector.mult(direction, intDist));
+      intNormal = intObj.getIntNormal(this);
       
       return true;
     }
@@ -43,7 +43,8 @@ class Ray {
   
   PVector cast(Object firstHitObject, PVector prevColor, int count) {
     PVector newColor = bg_color;
-    if (intGet()) {  
+    
+    if (intGet()) {
       if (count < bounces) {
         
         if (count == 0) {
@@ -57,8 +58,17 @@ class Ray {
         PVector d = PVector.mult(direction, intDist);
         PVector intersection_vector = PVector.sub(PVector.mult(intNormal, 2 * PVector.dot(d, intNormal)), d);
         
+        //println(direction, intDist);
+        //println(direction, intersection_vector);
+        
         // Calculating the successive ray's origin and direction
-        PVector rDirection = PVector.add(intersection_vector.normalize(), new PVector(random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness)).normalize();
+        // The roughness-factor controls the amount of surface scattering (randomness of reflection-direction)
+        PVector rDirection = 
+          PVector.add(
+            intersection_vector.normalize(), 
+            new PVector(random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness)
+          ).normalize();
+        
         PVector rOrigin = PVector.add(intPoint, PVector.mult(rDirection, 0.01)); // The successive ray gets a small offset 
         
         // Only cast the next ray if it doesn't point into the object
