@@ -1,4 +1,4 @@
-PVector resolution = new PVector(20, 20); 
+PVector resolution = new PVector(800, 800); 
 float FOV = 40; // in degrees; max is 90
 
 PVector bg_color = new PVector(255, 255, 255);
@@ -23,11 +23,10 @@ void setup() {
   
   objects = new Object[] {
     //new Sphere(new PVector(300, -850, 0), 500, new PVector(255, 255, 255), 0, 0), // Light
-    new Plane(new PVector(400, 25, 0), new PVector(200, 100, 100), 0, 0.7), // (subsoil)
-    //new Sphere(new PVector(400, 450+r_, r_ / 4), r_, new PVector(200, 100, 100), 0, 1),
+    new Plane(new PVector(400, 800, 0), new PVector(200, 100, 100), 0, 0.7), // (subsoil)
     
-    new Sphere(new PVector(20, 0, 50), 20, new PVector(46, 215, 187), 0.5, 0), // Small sphere
-    new Sphere(new PVector(0, 0, 100), 20, new PVector(46, 259, 151), 0.5, 0.7), // Small sphere
+    new Sphere(new PVector(700, 500, 650), 250, new PVector(46, 215, 187), 0.5, 0), // Small sphere
+    new Sphere(new PVector(400, 500, 1200), 250, new PVector(46, 259, 151), 0.5, 0.7), // Small sphere
   };
   
   // Converting FOV from degrees to 0, 1

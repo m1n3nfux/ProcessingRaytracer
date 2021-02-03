@@ -23,7 +23,7 @@ class Ray {
       t = obj.intDist(this);
       
       if( t != 0 ){ // hit
-        if (t_min == 0 || t < t_min) {
+        if (t_min == 0 || abs(t) < abs(t_min)) {
           t_min = t;
           closest = obj; 
           
