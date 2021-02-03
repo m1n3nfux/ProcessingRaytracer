@@ -48,8 +48,6 @@ class Sphere extends Object {
         t0 = t1;
       }
       
-      if (t0 < 0 && abs(t0) > 0.1) { println("! " + t0, t1, t2);}
-      
     } else if ( delta == 0) { // 1 intersection
       t0 = -0.5 * b / a;
       

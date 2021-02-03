@@ -24,6 +24,7 @@ class Ray {
       
       if( t != 0 ){ // hit
         if (t_min == 0 || abs(t) < abs(t_min)) {
+        //if (t_min == 0 || t < t_min) {
           t_min = t;
           closest = obj; 
           
@@ -59,7 +60,11 @@ class Ray {
         PVector d = PVector.mult(direction, intDist);
         PVector intersection_vector = PVector.sub(PVector.mult(intNormal, 2 * PVector.dot(d, intNormal)), d);
         
-        //println(intDist, intObj, firstHitObject);
+        
+        if (firstHitObject instanceof Sphere) {
+          println(intDist, intObj, firstHitObject);
+        }
+        
         //print(intersection_vector + ", \t\t\t");
         
         // Calculating the successive ray's origin and direction
@@ -74,11 +79,11 @@ class Ray {
         
         // Only cast the next ray if it doesn't point into the object
         if (PVector.dot(rDirection, intNormal) >= 0) {
+          
           Ray r = new Ray(rOrigin, rDirection);
           return r.cast(firstHitObject, newColor, count + 1);
+          
         }
-      } else if (count == bounces) {
-        
       }
     } else if (firstHitObject != null) {
       newColor = PVector.add(PVector.mult(bg_color, firstHitObject.reflectivity), PVector.mult(prevColor, 1-firstHitObject.reflectivity));
