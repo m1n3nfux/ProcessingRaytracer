@@ -28,11 +28,14 @@ Raycasting in Processing Codebeispiel
 - √ Implementierung von Schatten und Refletionen (Auftreff-winkel, ...)
 - √ Diffusion
 - √ Lampen-Objekt (im Grunde eine weiße Kugel, die die Farbe eines Reflection Rays aufhellt (weiß))
-- √ Einstellbare Relfektivität von Objekten
-- FOV (field of view) (Rays in einem Winkel von der Kamera) => Perspektive
-- Unterschiedliche Arten von Objekten
+- √ Einstellbare Reflektivität von Objekten
+- √ FOV (field of view) (Rays in einem Winkel von der Kamera) => Perspektive
+- (√) Unterschiedliche Arten von Objekten
+  - √ Sphere
+  - (√) Plane (Size und Rotation fehlen)
+  - Dreieck (Grundlage für Import von jeglichen 3d-Modellen)
 - Bewegbare Kamera (Direction, Rotation, ...)
-
+- Koordinaten unabhängig von Auflösung (-> Veränderung der Auflösung verändert nicht Bildausschnitt, sondern Skalierung)
 
 
 ### Protokoll
