@@ -92,4 +92,4 @@ Ergebnisse s. Oben ;)
 ### Mi. 03.02.2021
 - Reflektionen gefixt: Spigelungen werden jetzt sowohl auf dem Objekt, als auch in einer Reflektion abgebildet.
 - Entdeckte Bugs: Roughness wird nur auf der Oberfläche des ersten Treffers angewandt, 
-  bzw. Objekte mit einer nicht-spiegelnden Oberfläche sehen in einer Reflektion spiegelnd aus.
+  bzw. Objekte mit einer nicht-spiegelnden Oberfläche sehen in einer Reflektion spiegelnd aus. (https://imgur.com/a/9cKRaJj)
