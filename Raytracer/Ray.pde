@@ -74,7 +74,7 @@ class Ray {
         PVector rDirection = 
           PVector.add(
             intersection_vector.normalize(), 
-            new PVector(random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness)
+            new PVector(random(-1, 1) * intObj.roughness, random(-1, 1) * intObj.roughness, random(-1, 1) * intObj.roughness)
           ).normalize();
           
         PVector rOrigin = PVector.add(intPoint, PVector.mult(rDirection, 0.01)); // The successive ray gets a small offset 
