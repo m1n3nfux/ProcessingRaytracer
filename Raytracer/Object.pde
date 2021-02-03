@@ -42,11 +42,14 @@ class Sphere extends Object {
       t1 = -0.5 * (b + sqrt(delta))/a;
       t2 = -0.5 * (b - sqrt(delta))/a;
 
-      if (t1 > t2) {
+      if (t1 > t2) { // originally t1 < t2 -> in case of problems
         t0 = t2;
       } else {
         t0 = t1;
       }
+      
+      if (t0 < 0) { println("! " + t0, t1, t2);}
+      
     } else if ( delta == 0) { // 1 intersection
       t0 = -0.5 * b / a;
     } else { //no intersection

@@ -25,7 +25,8 @@ class Ray {
       if( t != 0 ){ // hit
         if (t_min == 0 || t < t_min) {
           t_min = t;
-          closest = obj;
+          closest = obj; 
+          
         }
       }
     }
@@ -58,8 +59,8 @@ class Ray {
         PVector d = PVector.mult(direction, intDist);
         PVector intersection_vector = PVector.sub(PVector.mult(intNormal, 2 * PVector.dot(d, intNormal)), d);
         
-        //println(direction, intDist);
-        //println(direction, intersection_vector);
+        //println(intDist, intObj, firstHitObject);
+        //print(intersection_vector + ", \t\t\t");
         
         // Calculating the successive ray's origin and direction
         // The roughness-factor controls the amount of surface scattering (randomness of reflection-direction)
@@ -68,7 +69,7 @@ class Ray {
             intersection_vector.normalize(), 
             new PVector(random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness, random(-1, 1) * firstHitObject.roughness)
           ).normalize();
-        
+          
         PVector rOrigin = PVector.add(intPoint, PVector.mult(rDirection, 0.01)); // The successive ray gets a small offset 
         
         // Only cast the next ray if it doesn't point into the object
