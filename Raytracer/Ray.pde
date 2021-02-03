@@ -16,22 +16,23 @@ class Ray {
   boolean intGet() {
     float t_min = 0;
     Object closest = null;
-  
+    //println();
     for(Object obj : objects){
       float t = 0;
       
       t = obj.intDist(this);
       
       if( t != 0 ){ // hit
-        if (t_min == 0 || abs(t) < abs(t_min)) {
+        if (t_min == 0 || abs(t) < t_min) {
         //if (t_min == 0 || t < t_min) {
           t_min = t;
           closest = obj; 
           
         }
       }
+      //println(this.origin, obj, t, t_min);
     }
-    
+
     if (t_min != 0) {
       intDist = t_min;
       intObj = closest;
@@ -50,6 +51,7 @@ class Ray {
       if (count < bounces) {
         
         if (count == 0) {
+          //intObj.c = new PVector(intNormal.x * 255, intNormal.y * 255, intNormal.z * 255);
           newColor = intObj.c;
           firstHitObject = intObj;
         } else { // Mixing current color with object-color
@@ -62,7 +64,7 @@ class Ray {
         
         
         if (firstHitObject instanceof Sphere) {
-          println(intDist, intObj, firstHitObject);
+          //println(intDist, intObj, firstHitObject);
         }
         
         //print(intersection_vector + ", \t\t\t");
@@ -76,7 +78,7 @@ class Ray {
           ).normalize();
           
         PVector rOrigin = PVector.add(intPoint, PVector.mult(rDirection, 0.01)); // The successive ray gets a small offset 
-        
+        //println(firstHitObject.getClass().getName());
         // Only cast the next ray if it doesn't point into the object
         if (PVector.dot(rDirection, intNormal) >= 0) {
           
@@ -86,7 +88,7 @@ class Ray {
         }
       }
     } else if (firstHitObject != null) {
-      newColor = PVector.add(PVector.mult(bg_color, firstHitObject.reflectivity), PVector.mult(prevColor, 1-firstHitObject.reflectivity));
+      newColor = PVector.add(PVector.mult(bg_color, 1-firstHitObject.reflectivity), PVector.mult(prevColor, firstHitObject.reflectivity));
     }
     // Returning final color
     return newColor;

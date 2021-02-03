@@ -16,7 +16,6 @@ class Object {
 
 class Sphere extends Object { 
   int radius;
-  PVector normal;
 
   Sphere(PVector origin_, int radius_, PVector c_, float roughness_, float reflectivity_) {
     origin = origin_;
@@ -41,20 +40,20 @@ class Sphere extends Object {
 
       t1 = -0.5 * (b + sqrt(delta))/a;
       t2 = -0.5 * (b - sqrt(delta))/a;
-
-      if (t1 < t2) { // originally t1 < t2 -> in case of problems
+      
+      if (abs(t1) > abs(t2)) { // originally t1 < t2 -> in case of problems
         t0 = t2;
       } else {
         t0 = t1;
       }
-      
+      //println(ray.origin.x, ray.origin.y, ray.origin.z, this, t1, t2, t0);
     } else if ( delta == 0) { // 1 intersection
       t0 = -0.5 * b / a;
       
     } else { //no intersection
       t0 = 0;
     }
-
+    
     return t0;
   }
   
