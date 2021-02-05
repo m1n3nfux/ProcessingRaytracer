@@ -1,4 +1,11 @@
-PVector resolution = new PVector(800, 800); 
+float aspectratio = 16.0 / 10.0;
+float frameWidth = 800;
+float frameHeight = frameWidth / aspectratio;
+
+float scale = 100;
+float dif = frameWidth / scale;
+
+PVector resolution = new PVector(frameWidth, frameHeight); 
 float FOV = 40; // in degrees; max is 90
 
 PVector bg_color = new PVector(50, 50, 50);
@@ -21,12 +28,15 @@ public void settings(){
 void setup() {
   
   objects = new Object[] {
-    new Sphere(new PVector(300, -1000, 900), 500, new PVector(255, 255, 255), 0, 0), // Light
-    new Plane(new PVector(400, 800, 0), new PVector(200, 100, 100), 0.0, 0.5), // (subsoil)
+    new Sphere(new PVector(50 * dif, -100 * dif, 90 * dif), int(50 * dif), new PVector(255, 255, 255), 0, 0), // Light
+    new Plane( new PVector(80 * dif, 50 * dif, 0 * dif), new PVector(200, 100, 100), 0.0, 0.5), // (subsoil)
     
-    new Sphere(new PVector(200, 600, 900), 200, new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
-    new Sphere(new PVector(500, 600, 1500), 200, new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
-  };
+    new Sphere(new PVector(0 * dif, 20 * dif, 120 * dif), int(20 * dif), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(100 * dif, 20 * dif, 120 * dif), int(20 * dif), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(50 * dif, 20 * dif, 120 * dif), int(20 * dif), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(150 * dif, 20 * dif, 120 * dif), int(20 * dif), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
+  
+};
   
   // Converting FOV from degrees to 0, 1
   FOV = map(FOV, 0, 90, 0, 1);
@@ -91,7 +101,7 @@ void draw() {
   image(img, 0, 0);
   
   // Saving the image
-  img.save("output.jpg");
+  //img.save("output.jpg");
   
   // Done message with timer
   println("done [" + millis()/1000 + "s " + (millis() - (millis()/1000 * 1000)) + "ms]");
