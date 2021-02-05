@@ -1,5 +1,5 @@
-float aspectratio = 16.0 / 10.0;
-float frameWidth = 800;
+float aspectratio = 16.0 / 9.0;
+float frameWidth = 880;
 float frameHeight = frameWidth / aspectratio;
 
 float scale = 100;
@@ -57,7 +57,7 @@ void draw() {
           
           Ray r = new Ray(
             new PVector(x + a/(density.x), y + b/(density.y), 0), 
-            new PVector( map(x, 0, resolution.x, -FOV, FOV) , map(y, 0, resolution.y, -FOV, FOV), 1)
+            new PVector( map(x, 0, resolution.x, -FOV , FOV ), map(y, 0, resolution.y, -FOV / aspectratio, FOV / aspectratio), 1)
           );
           
           if(a == 0 && b==0 && r.intGet() == false){
