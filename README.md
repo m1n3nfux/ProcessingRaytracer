@@ -34,8 +34,9 @@ Raycasting in Processing Codebeispiel
   - √ Sphere
   - (√) Plane (Size und Rotation fehlen)
   - Dreieck (Grundlage für Import von jeglichen 3d-Modellen)
+- √ Koordinaten unabhängig von Auflösung (-> Veränderung der Auflösung verändert nicht Bildausschnitt, sondern Skalierung)
 - Bewegbare Kamera (Direction, Rotation, ...)
-- Koordinaten unabhängig von Auflösung (-> Veränderung der Auflösung verändert nicht Bildausschnitt, sondern Skalierung)
+
 
 
 ### Protokoll
@@ -96,3 +97,9 @@ Ergebnisse s. Oben ;)
 - Reflektionen gefixt: Spigelungen werden jetzt sowohl auf dem Objekt, als auch in einer Reflektion abgebildet.
 - Entdeckte Bugs: Roughness wird nur auf der Oberfläche des ersten Treffers angewandt, 
   bzw. Objekte mit einer nicht-spiegelnden Oberfläche sehen in einer Reflektion spiegelnd aus. (https://imgur.com/a/9cKRaJj)
+
+### Fr. 05.02.2021
+- Auflösung geändert von "Width * Height" in "Width * (Width / AspectRatio)"
+- Dadurch entstandenes gestauchtes FOV gefixt
+- Längeneinheit implementiert, die statt Pixeln das Verhältnis zur Bildbreite verwendet. 
+  Dadurch lässt sich das Bild durch Veränderung der Auflösung einfach Skalieren, anstatt dass der Bildausschnitt sich verändert.
