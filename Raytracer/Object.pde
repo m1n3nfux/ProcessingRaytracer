@@ -18,8 +18,8 @@ class Sphere extends Object {
   int radius;
 
   Sphere(PVector origin_, int radius_, PVector c_, float roughness_, float reflectivity_) {
-    origin = origin_;
-    radius = radius_;
+    origin = PVector.mult(origin_, u);
+    radius = radius_ * int(u);
     c = c_;
     roughness = roughness_;
     reflectivity = reflectivity_;
@@ -69,7 +69,7 @@ class Plane extends Object {
   PVector normal = new PVector(0, 1, 0);
 
   Plane(PVector origin_, PVector dimensions_, PVector rotation_, PVector c_, float roughness_, float reflectivity_) {
-    origin = origin_;
+    origin = PVector.mult(origin_, u);
     dimensions = dimensions_;
     rotation = rotation_;
     c = c_;
@@ -78,7 +78,7 @@ class Plane extends Object {
   }
 
   Plane(PVector origin_, PVector c_, float roughness_, float reflectivity_) {
-    origin = origin_;
+    origin = PVector.mult(origin_, u);
     c = c_;
     roughness = roughness_;
     reflectivity = reflectivity_;

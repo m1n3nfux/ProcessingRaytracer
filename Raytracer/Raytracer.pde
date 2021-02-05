@@ -3,7 +3,7 @@ float frameWidth = 880;
 float frameHeight = frameWidth / aspectratio;
 
 float scale = 100;
-float dif = frameWidth / scale;
+float u = frameWidth / scale;
 
 PVector resolution = new PVector(frameWidth, frameHeight); 
 float FOV = 40; // in degrees; max is 90
@@ -28,14 +28,14 @@ public void settings(){
 void setup() {
   
   objects = new Object[] {
-    new Sphere(new PVector(50 * dif, -100 * dif, 90 * dif), int(50 * dif), new PVector(255, 255, 255), 0, 0), // Light
-    new Plane( new PVector(80 * dif, 50 * dif, 0 * dif), new PVector(200, 100, 100), 0.0, 0.5), // (subsoil)
+    new Sphere(new PVector(50, -100, 90), int(50), new PVector(255, 255, 255), 0, 0), // Light
+    new Plane( new PVector(80, 60, 0), new PVector(200, 100, 100), 0.0, 0.5), // (subsoil)
     
-    new Sphere(new PVector(0 * dif, 20 * dif, 120 * dif), int(20 * dif), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
-    new Sphere(new PVector(100 * dif, 20 * dif, 120 * dif), int(20 * dif), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
-    new Sphere(new PVector(50 * dif, 20 * dif, 120 * dif), int(20 * dif), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
-    new Sphere(new PVector(150 * dif, 20 * dif, 120 * dif), int(20 * dif), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
-  
+    new Sphere(new PVector(-50, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(0, 40, 175), int(15), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(50, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(100, 40, 175), int(15), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(150, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
 };
   
   // Converting FOV from degrees to 0, 1
