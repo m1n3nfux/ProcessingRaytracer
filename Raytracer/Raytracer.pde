@@ -6,7 +6,7 @@ float scale = 100;
 float u = frameWidth / scale;
 
 PVector resolution = new PVector(frameWidth, frameHeight); 
-float FOV = 40; // in degrees; max is 90
+float FOV = 90; // in degrees; max is 180
 
 PVector bg_color = new PVector(50, 50, 50);
 
@@ -14,9 +14,10 @@ PVector bg_color = new PVector(50, 50, 50);
 PImage img = createImage(int(resolution.x), int(resolution.y), RGB);
 
 int bounces = 10;
-PVector density = new PVector(10, 10);
+PVector density = new PVector(1, 1);
 
 Object[] objects;
+Camera cam = new Camera(new PVector(0, 0, 0), new PVector(0, 90, 1));
 
 public void settings(){
   size(int(resolution.x),int(resolution.y));
@@ -38,8 +39,8 @@ void setup() {
     new Sphere(new PVector(150, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
 };
   
-  // Converting FOV from degrees to 0, 1
-  FOV = map(FOV, 0, 90, 0, 1);
+  // Converting FOV from degrees to 0 - 1
+  FOV = map(FOV, 0, 180, 0, 1);
 }
 
 
@@ -55,10 +56,16 @@ void draw() {
       for (int a = 0; a < density.x; a++) {
         for (int b = 0; b < density.y; b++) {
           
+          PVector rDirection = new PVector( map(x, 0, resolution.x, -FOV , FOV ) + cam.direction.x, map(y, 0, resolution.y, -FOV / aspectratio, FOV / aspectratio) + cam.direction.y, 1);
+          
           Ray r = new Ray(
             new PVector(x + a/(density.x), y + b/(density.y), 0), 
-            new PVector( map(x, 0, resolution.x, -FOV , FOV ), map(y, 0, resolution.y, -FOV / aspectratio, FOV / aspectratio), 1)
+            rDirection
           );
+          
+          if (r.origin.x == resolution.x / 2) {
+            println(r.direction);
+          }
           
           if(a == 0 && b==0 && r.intGet() == false){
             renderColor = PVector.mult(bg_color, density.x * density.y);
