@@ -107,5 +107,6 @@ Ergebnisse s. Oben ;)
 
 #### Mi. 01.02.2021
 - Kamera Objekt erstellt
+- Kamera Position implementiert
 - Unterstützung für mehrere Kameras, zwischen denen einfach gewechselt werden kann
 - Konzept für Kamera-Rotation erstellt
