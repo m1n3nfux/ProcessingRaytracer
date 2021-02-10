@@ -35,7 +35,8 @@ Raycasting in Processing Codebeispiel
   - (√) Plane (Size und Rotation fehlen)
   - Dreieck (Grundlage für Import von jeglichen 3d-Modellen)
 - √ Koordinaten unabhängig von Auflösung (-> Veränderung der Auflösung verändert nicht Bildausschnitt, sondern Skalierung)
-- Bewegbare Kamera (Direction, Rotation, ...)
+- (√) Bewegbare Kamera (Position √, Rotation, ...)
+- √ Mehrere Kameras, zwischen denen einfach gewechselt werden kann
 
 
 
@@ -93,13 +94,18 @@ Ergebnisse s. Oben ;)
 - FOV implementiert
 - Fehler bei der Reihenfolge von Reflektionen gefunden (https://imgur.com/lLMV2C9, https://imgur.com/a/J4LLrir)
 
-### Mi. 03.02.2021
+#### Mi. 03.02.2021
 - Reflektionen gefixt: Spigelungen werden jetzt sowohl auf dem Objekt, als auch in einer Reflektion abgebildet.
 - Entdeckte Bugs: Roughness wird nur auf der Oberfläche des ersten Treffers angewandt, 
   bzw. Objekte mit einer nicht-spiegelnden Oberfläche sehen in einer Reflektion spiegelnd aus. (https://imgur.com/a/9cKRaJj)
 
-### Fr. 05.02.2021
+#### Fr. 05.02.2021
 - Auflösung geändert von "Width * Height" in "Width * (Width / AspectRatio)"
 - Dadurch entstandenes gestauchtes FOV gefixt
 - Längeneinheit implementiert, die statt Pixeln das Verhältnis zur Bildbreite verwendet. 
   Dadurch lässt sich das Bild durch Veränderung der Auflösung einfach Skalieren, anstatt dass der Bildausschnitt sich verändert.
+
+#### Mi. 01.02.2021
+- Kamera Objekt erstellt
+- Unterstützung für mehrere Kameras, zwischen denen einfach gewechselt werden kann
+- Konzept für Kamera-Rotation erstellt
