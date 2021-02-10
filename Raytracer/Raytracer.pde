@@ -1,6 +1,6 @@
 float aspectratio = 16.0 / 9.0;
 float frameWidth = 880;
-float frameHeight = frameWidth / aspectratio;
+float frameHeight = int(frameWidth / aspectratio);
 
 float scale = 100;
 float u = frameWidth / scale;
