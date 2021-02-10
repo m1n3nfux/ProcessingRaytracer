@@ -8,7 +8,7 @@ Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 8
 // camera-dependent values
 Camera selectedCam = cam;
 
-
+//camera rotation: rotate sensor plane, calculate direction of center ray as orthogonal, use to calculate fov
 PImage img = createImage(int(selectedCam.resolution.x), int(selectedCam.resolution.y), RGB);
 
 int bounces = 10;
