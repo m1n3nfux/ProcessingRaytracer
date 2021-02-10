@@ -14,7 +14,9 @@ PVector bg_color = new PVector(50, 50, 50);
 PImage img = createImage(int(resolution.x), int(resolution.y), RGB);
 
 int bounces = 10;
-PVector density = new PVector(10, 10);
+PVector density = new PVector(1, 1);
+
+Camera cam = new Camera(new PVector(0,0,0), new PVector(0,0,0), 40);
 
 Object[] objects;
 
@@ -56,7 +58,7 @@ void draw() {
         for (int b = 0; b < density.y; b++) {
           
           Ray r = new Ray(
-            new PVector(x + a/(density.x), y + b/(density.y), 0), 
+            new PVector(x + cam.origin.x + a/(density.x), y + cam.origin.y + b/(density.y), 0 + cam.origin.z), 
             new PVector( map(x, 0, resolution.x, -FOV , FOV ), map(y, 0, resolution.y, -FOV / aspectratio, FOV / aspectratio), 1)
           );
           
