@@ -20,4 +20,8 @@ class Camera {
     resolution = new PVector(frameWidth, frameHeight); 
     density = density_;
   }
+  
+  void calcRotation(){
+    return;
+  }
 }
