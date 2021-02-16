@@ -1,7 +1,7 @@
 float scale = 100;
 
 //camera: position, rotation, FOV, aspectratio, width, density
-Camera cam = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 880, new PVector(1,1));
+Camera cam = new Camera(new PVector(0,0,0), new PVector(0,0,0), 40, 16.0/9.0, 880, new PVector(1,1));
 Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 880, new PVector(10,10));
 
 
@@ -105,4 +105,34 @@ void draw() {
   // Done message with timer
   println("done [" + millis()/1000 + "s " + (millis() - (millis()/1000 * 1000)) + "ms]");
   println(int(selectedCam.resolution.x * selectedCam.resolution.y) + " pixels rendered, using " + int((selectedCam.resolution.x * selectedCam.resolution.y) * (selectedCam.density.x * selectedCam.density.y)) + " rays. (" + int(selectedCam.density.x * selectedCam.density.y) + " rays per pixel)");
+}
+
+void calcRotation(Ray ray){
+  float tempX = ray.origin.x;
+  float tempY = ray.origin.y;
+  float tempZ = ray.origin.z;
+  
+  // Um z 
+  PVector temp = new PVector(tempX, tempY); 
+  temp.rotate( radians(selectedCam.direction.z) );
+  tempX = temp.x;
+  tempY = temp.y;
+ 
+  // Um y
+  temp = new PVector(tempX, tempZ); 
+  temp.rotate( radians(selectedCam.direction.y) );
+  tempX = temp.x;
+  tempZ = temp.y;
+  
+  // Um x
+  temp = new PVector(tempZ, tempX); 
+  temp.rotate( radians(selectedCam.direction.y) );
+  tempZ = temp.x;
+  tempX = temp.y;
+  
+  // set new origin
+  ray.origin.x = tempX;
+  ray.origin.y = tempY;
+  ray.origin.z = tempZ;
+
 }
