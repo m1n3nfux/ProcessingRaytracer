@@ -110,3 +110,11 @@ Ergebnisse s. Oben ;)
 - Kamera Position implementiert
 - Unterstützung für mehrere Kameras, zwischen denen einfach gewechselt werden kann
 - Konzept für Kamera-Rotation erstellt
+
+#### Di. 16.02.2021
+- Funktion für Kamera-Rotation grob skizziert
+
+#### Mi. 17.02.2021
+- Funktion zum rotieren der Kamera als Funktion zur dreidimensionalen Rotation eines Vektors ausgeweitet und fertiggestellt
+- Kamera-Rotation mit genannter Funktion implementiert
+- Offset für Kamera implementiert, damit sich die Kamera um ihren Mittelpunkt dreht und nicht um die obere linke Ecke
