@@ -1,7 +1,7 @@
 float scale = 100;
 
 //camera: position, rotation, FOV, aspectratio, width, density
-Camera cam = new Camera(new PVector(100,-10,-200), new PVector(0,45,0), 40, 16.0/9.0, 880, new PVector(10,10));
+Camera cam = new Camera(new PVector(100,-10,-200), new PVector(0,45,0), 40, 16.0/9.0, 880, new PVector(1,1));
 Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 880, new PVector(10,10));
 
 
@@ -59,8 +59,9 @@ void draw() {
             new PVector(x + selectedCam.origin.x + a/(selectedCam.density.x), y + selectedCam.origin.y + b/(selectedCam.density.y), 0 + selectedCam.origin.z), 
             new PVector( map(x, 0, selectedCam.resolution.x, -selectedCam.FOV , selectedCam.FOV ), map(y, 0, selectedCam.resolution.y, -selectedCam.FOV / selectedCam.aspectratio, selectedCam.FOV / selectedCam.aspectratio), 1)
           );
-          r.origin = rotateVector(r.origin, selectedCam.direction);
-          r.direction = rotateVector(r.direction, selectedCam.direction);
+          rotateVector(r.origin, selectedCam.direction);
+          rotateVector(r.direction, selectedCam.direction);
+          
           if(a == 0 && b==0 && r.intGet() == false){
             renderColor = PVector.mult(bg_color, selectedCam.density.x * selectedCam.density.y);
             //break;
@@ -108,29 +109,24 @@ void draw() {
   println(int(selectedCam.resolution.x * selectedCam.resolution.y) + " pixels rendered, using " + int((selectedCam.resolution.x * selectedCam.resolution.y) * (selectedCam.density.x * selectedCam.density.y)) + " rays. (" + int(selectedCam.density.x * selectedCam.density.y) + " rays per pixel)");
 }
 
-PVector rotateVector(PVector vector, PVector rotation){
-  float tempX = vector.x;
-  float tempY = vector.y;
-  float tempZ = vector.z;
+void rotateVector(PVector vector, PVector rotation){
+  PVector result = vector; 
   
   // Um x
-  PVector temp = new PVector(tempY, tempZ); 
-  temp.rotate( radians(rotation.x) );
-  tempY = temp.x;
-  tempZ = temp.y;
+  PVector temp = new PVector(result.y, result.z).rotate( radians(rotation.x) );
+  result.y = temp.x;
+  result.z = temp.y;
   
   // Um y
-  temp = new PVector(tempX, tempZ); 
-  temp.rotate( radians(rotation.y) );
-  tempX = temp.x;
-  tempZ = temp.y;
+  temp = new PVector(result.x, result.z).rotate( radians(rotation.y) );
+  result.x = temp.x;
+  result.z = temp.y;
   
   // Um z 
-  temp = new PVector(tempX, tempY); 
-  temp.rotate( radians(rotation.z) );
-  tempX = temp.x;
-  tempY = temp.y;
+  temp = new PVector(result.x, result.y).rotate( radians(rotation.z) );
+  result.x = temp.x;
+  result.y = temp.y;
 
   // set new vector
-  return new PVector(tempX, tempY, tempZ);
+  //vector = result;
 }
