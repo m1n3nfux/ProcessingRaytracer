@@ -109,24 +109,19 @@ void draw() {
   println(int(selectedCam.resolution.x * selectedCam.resolution.y) + " pixels rendered, using " + int((selectedCam.resolution.x * selectedCam.resolution.y) * (selectedCam.density.x * selectedCam.density.y)) + " rays. (" + int(selectedCam.density.x * selectedCam.density.y) + " rays per pixel)");
 }
 
-void rotateVector(PVector vector, PVector rotation){
-  PVector result = vector; 
-  
+void rotateVector(PVector vector, PVector rotation){ 
   // Um x
-  PVector temp = new PVector(result.y, result.z).rotate( radians(rotation.x) );
-  result.y = temp.x;
-  result.z = temp.y;
+  PVector temp = new PVector(vector.y, vector.z).rotate( radians(rotation.x) );
+  vector.y = temp.x;
+  vector.z = temp.y;
   
   // Um y
-  temp = new PVector(result.x, result.z).rotate( radians(rotation.y) );
-  result.x = temp.x;
-  result.z = temp.y;
+  temp = new PVector(vector.x, vector.z).rotate( radians(rotation.y) );
+  vector.x = temp.x;
+  vector.z = temp.y;
   
   // Um z 
-  temp = new PVector(result.x, result.y).rotate( radians(rotation.z) );
-  result.x = temp.x;
-  result.y = temp.y;
-
-  // set new vector
-  //vector = result;
+  temp = new PVector(vector.x, vector.y).rotate( radians(rotation.z) );
+  vector.x = temp.x;
+  vector.y = temp.y;
 }
