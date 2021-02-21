@@ -1,7 +1,7 @@
 float scale = 100;
 
 //camera: position, rotation, FOV, aspectratio, width, density
-Camera cam = new Camera(new PVector(0,0,0), new PVector(0,0,0), 40, 16.0/9.0, 880, new PVector(1,1));
+Camera cam = new Camera(new PVector(0,0,000), new PVector(0,0,0), 40, 16.0/9.0, 880, new PVector(1,1));
 Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 880, new PVector(10,10));
 
 
@@ -29,14 +29,14 @@ public void settings(){
 void setup() {
   
   objects = new Object[] {
-    new Sphere(new PVector(50, -100, 90), int(50), new PVector(255, 255, 255), 0, 0), // Light
-    new Plane( new PVector(80, 60, 0), new PVector(200, 100, 100), 0.0, 0.5), // (subsoil)
+    new Sphere(new PVector(0, -100, 90), int(50), new PVector(255, 255, 255), 0, 0), // Light
+    new Plane( new PVector(80, 60, 0), new PVector(200, 100, 100), 0.05, 0.6), // (subsoil)
     
-    new Sphere(new PVector(-50, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
-    new Sphere(new PVector(0, 40, 175), int(15), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
-    new Sphere(new PVector(50, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
-    new Sphere(new PVector(100, 40, 175), int(15), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
-    new Sphere(new PVector(150, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(-100, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(-50, 40, 175), int(15), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(0, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(50, 40, 175), int(15), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
+    new Sphere(new PVector(100, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
   };
 }
 
@@ -44,7 +44,7 @@ void setup() {
 void draw() {
   img.loadPixels();
   
-  println(selectedCam, selectedCam.origin);
+  //println(selectedCam, selectedCam.origin);
   
   // Sending a Ray for every pixel
   for (int x = 0; x < selectedCam.resolution.x; x++) {
@@ -56,9 +56,11 @@ void draw() {
         for (int b = 0; b < selectedCam.density.y; b++) {
           
           Ray r = new Ray(
-            new PVector(x + selectedCam.origin.x + a/(selectedCam.density.x), y + selectedCam.origin.y + b/(selectedCam.density.y), 0 + selectedCam.origin.z), 
+            new PVector(x + selectedCam.origin.x + a/(selectedCam.density.x) - selectedCam.resolution.x/2, y + selectedCam.origin.y + b/(selectedCam.density.y) - selectedCam.resolution.y/2, 0 + selectedCam.origin.z), 
             new PVector( map(x, 0, selectedCam.resolution.x, -selectedCam.FOV , selectedCam.FOV ), map(y, 0, selectedCam.resolution.y, -selectedCam.FOV / selectedCam.aspectratio, selectedCam.FOV / selectedCam.aspectratio), 1)
           );
+          rotateVector(r.origin, selectedCam.direction);
+          rotateVector(r.direction, selectedCam.direction);
           
           if(a == 0 && b==0 && r.intGet() == false){
             renderColor = PVector.mult(bg_color, selectedCam.density.x * selectedCam.density.y);
@@ -100,39 +102,26 @@ void draw() {
   image(img, 0, 0);
   
   // Saving the image
-  //img.save("output.jpg");
+  img.save("output.jpg");
   
   // Done message with timer
   println("done [" + millis()/1000 + "s " + (millis() - (millis()/1000 * 1000)) + "ms]");
   println(int(selectedCam.resolution.x * selectedCam.resolution.y) + " pixels rendered, using " + int((selectedCam.resolution.x * selectedCam.resolution.y) * (selectedCam.density.x * selectedCam.density.y)) + " rays. (" + int(selectedCam.density.x * selectedCam.density.y) + " rays per pixel)");
 }
 
-void calcRotation(Ray ray){
-  float tempX = ray.origin.x;
-  float tempY = ray.origin.y;
-  float tempZ = ray.origin.z;
+void rotateVector(PVector vector, PVector rotation){ 
+  // Um x
+  PVector temp = new PVector(vector.y, vector.z).rotate( radians(rotation.x) );
+  vector.y = temp.x;
+  vector.z = temp.y;
+  
+  // Um y
+  temp = new PVector(vector.x, vector.z).rotate( radians(rotation.y) );
+  vector.x = temp.x;
+  vector.z = temp.y;
   
   // Um z 
-  PVector temp = new PVector(tempX, tempY); 
-  temp.rotate( radians(selectedCam.direction.z) );
-  tempX = temp.x;
-  tempY = temp.y;
- 
-  // Um y
-  temp = new PVector(tempX, tempZ); 
-  temp.rotate( radians(selectedCam.direction.y) );
-  tempX = temp.x;
-  tempZ = temp.y;
-  
-  // Um x
-  temp = new PVector(tempZ, tempX); 
-  temp.rotate( radians(selectedCam.direction.y) );
-  tempZ = temp.x;
-  tempX = temp.y;
-  
-  // set new origin
-  ray.origin.x = tempX;
-  ray.origin.y = tempY;
-  ray.origin.z = tempZ;
-
+  temp = new PVector(vector.x, vector.y).rotate( radians(rotation.z) );
+  vector.x = temp.x;
+  vector.y = temp.y;
 }
