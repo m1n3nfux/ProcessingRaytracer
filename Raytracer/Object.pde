@@ -5,6 +5,7 @@ class Object {
   float roughness;
   float reflectivity;
 
+  // Dummy functions 
   float intDist(Ray ray) {
     return 0;
   }
@@ -36,27 +37,34 @@ class Sphere extends Object {
     float c = pow((PVector.sub(ray.origin, origin).mag()), 2) - pow(radius, 2);
 
     float delta = pow(b, 2) - 4 * a * c;
-    if ( delta > 0) { // 2 intersections
+    
+    // Look for intersections
+    // 2 intersections
+    if ( delta > 0) {
 
       t1 = -0.5 * (b + sqrt(delta))/a;
       t2 = -0.5 * (b - sqrt(delta))/a;
       
-      if (abs(t1) > abs(t2)) { // originally t1 < t2 -> in case of problems
+      // Get the closest one 
+      if (abs(t1) > abs(t2)) {
         t0 = t2;
       } else {
         t0 = t1;
       }
-      //println(ray.origin.x, ray.origin.y, ray.origin.z, this, t1, t2, t0);
-    } else if ( delta == 0) { // 1 intersection
+      
+    // 1 intersection
+    } else if ( delta == 0) {
       t0 = -0.5 * b / a;
       
-    } else { //no intersection
+    // no intersection
+    } else {
       t0 = 0;
     }
     
     return t0;
   }
   
+  // Calculate the normal of the surface
   PVector getIntNormal(Ray ray) {
     return PVector.sub(origin, ray.intPoint).normalize();
   }
@@ -84,6 +92,7 @@ class Plane extends Object {
     reflectivity = reflectivity_;
   }
 
+  // Calculate the distance between origin and intersection point
   float intDist(Ray ray) {
     float a = PVector.dot(PVector.sub(origin, ray.origin), normal);
     float b = PVector.dot(ray.direction, normal);
@@ -101,6 +110,4 @@ class Plane extends Object {
     return normal;
   }
 
-  void calc_points() { //calculate points from origin, dimension & rotation
-  }
 }

@@ -8,20 +8,19 @@ class Camera {
   PVector resolution;
   PVector density;
   float u;
-  Camera(PVector origin_, PVector direction_, float FOV_, float aspectratio_, int frameWidth_, PVector density_){
-    u = frameWidth_ / scale;
-    origin = PVector.mult(origin_, u);
-    
-    direction = direction_;
-    FOV = map(FOV_, 0, 90, 0, 1); // Converting FOV from degrees to 0, 1
+  
+  Camera(PVector origin_, PVector direction_, float FOV_, float aspectratio_, int frameWidth_, int density_){
     aspectratio = aspectratio_;
     frameWidth = frameWidth_;
     frameHeight = int(frameWidth / aspectratio);
-    resolution = new PVector(frameWidth, frameHeight); 
-    density = density_;
-  }
-  
-  void calcRotation(){
-    return;
+    resolution = new PVector(frameWidth, frameHeight);
+    u = frameWidth_ / scale;
+    
+    direction = direction_;
+    origin = PVector.mult(origin_, u);
+    
+    FOV = map(FOV_, 0, 90, 0, 1); // Converting FOV from degrees to 0, 1 
+    
+    density = new PVector(float(density_), float(density_));
   }
 }
