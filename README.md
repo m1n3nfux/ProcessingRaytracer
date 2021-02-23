@@ -120,3 +120,7 @@ Ergebnisse s. Oben ;)
 - Funktion zum rotieren der Kamera als Funktion zur dreidimensionalen Rotation eines Vektors ausgeweitet und fertiggestellt
 - Kamera-Rotation mit genannter Funktion implementiert
 - Offset für Kamera implementiert, damit sich die Kamera um ihren Mittelpunkt dreht und nicht um die obere linke Ecke
+
+#### Di. 23.02.2021
+- Code ausgiebig kommentiert
+- Code aufgeräumt
