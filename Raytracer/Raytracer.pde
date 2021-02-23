@@ -1,11 +1,7 @@
 float scale = 100;
 
 //camera: position, rotation, FOV, aspectratio, width, density
-<<<<<<< HEAD
-Camera cam = new Camera(new PVector(0,0,0), new PVector(15,0,0), 40, 16.0/9.0, 880, new PVector(1,1));
-=======
 Camera cam = new Camera(new PVector(0,0,000), new PVector(0,0,0), 40, 16.0/9.0, 880, new PVector(1,1));
->>>>>>> 59122318896445278df9d96576ef343c94b72831
 Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 880, new PVector(10,10));
 
 
@@ -33,13 +29,8 @@ public void settings(){
 void setup() {
   
   objects = new Object[] {
-<<<<<<< HEAD
-    new Sphere(new PVector(50, -100, 90), int(50), new PVector(255, 255, 255), 0, 0), // Light
-    //new Plane( new PVector(80, 60, 0), new PVector(200, 100, 100), 0.0, 0.5), // (subsoil)
-=======
     new Sphere(new PVector(0, -100, 90), int(50), new PVector(255, 255, 255), 0, 0), // Light
     new Plane( new PVector(80, 60, 0), new PVector(200, 100, 100), 0.05, 0.6), // (subsoil)
->>>>>>> 59122318896445278df9d96576ef343c94b72831
     
     new Sphere(new PVector(-100, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
     new Sphere(new PVector(-50, 40, 175), int(15), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
@@ -65,21 +56,11 @@ void draw() {
         for (int b = 0; b < selectedCam.density.y; b++) {
           
           Ray r = new Ray(
-<<<<<<< HEAD
-            new PVector(x + selectedCam.origin.x + a/(selectedCam.density.x), y + selectedCam.origin.y + b/(selectedCam.density.y), 0 + selectedCam.origin.z), 
-            new PVector(0, 0, 1)
-          );
-          calcRotation(r);
-          
-          r.direction.x += map(x, 0, selectedCam.resolution.x, -selectedCam.FOV , selectedCam.FOV );
-          r.direction.y += map(y, 0, selectedCam.resolution.y, -selectedCam.FOV / selectedCam.aspectratio, selectedCam.FOV / selectedCam.aspectratio);
-=======
             new PVector(x + selectedCam.origin.x + a/(selectedCam.density.x) - selectedCam.resolution.x/2, y + selectedCam.origin.y + b/(selectedCam.density.y) - selectedCam.resolution.y/2, 0 + selectedCam.origin.z), 
             new PVector( map(x, 0, selectedCam.resolution.x, -selectedCam.FOV , selectedCam.FOV ), map(y, 0, selectedCam.resolution.y, -selectedCam.FOV / selectedCam.aspectratio, selectedCam.FOV / selectedCam.aspectratio), 1)
           );
           rotateVector(r.origin, selectedCam.direction);
           rotateVector(r.direction, selectedCam.direction);
->>>>>>> 59122318896445278df9d96576ef343c94b72831
           
           if(a == 0 && b==0 && r.intGet() == false){
             renderColor = PVector.mult(bg_color, selectedCam.density.x * selectedCam.density.y);
@@ -128,36 +109,6 @@ void draw() {
   println(int(selectedCam.resolution.x * selectedCam.resolution.y) + " pixels rendered, using " + int((selectedCam.resolution.x * selectedCam.resolution.y) * (selectedCam.density.x * selectedCam.density.y)) + " rays. (" + int(selectedCam.density.x * selectedCam.density.y) + " rays per pixel)");
 }
 
-<<<<<<< HEAD
-PVector rotateVector(PVector start) {
-   PVector product = start;
-   
-   // Around Z
-   PVector temp = new PVector(product.x, product.y).rotate(radians(selectedCam.direction.z));
-   product.x = temp.x; 
-   product.y = temp.y;
-   
-   // Around Y
-   temp = new PVector(product.x, product.z).rotate(radians(selectedCam.direction.y));
-   product.x = temp.x; 
-   product.z = temp.y;
-   
-   // Around X
-   temp = new PVector(product.y, product.z).rotate(radians(selectedCam.direction.x));
-   product.y = temp.x; 
-   product.z = temp.y;
-   
-   return product;
-}
-
-void calcRotation(Ray ray){
-  
-  // set new origin
-  //ray.origin = rotateVector(ray.origin);
-  
-  // Rotating the direction
-  ray.direction = rotateVector(ray.direction);
-=======
 void rotateVector(PVector vector, PVector rotation){ 
   // Um x
   PVector temp = new PVector(vector.y, vector.z).rotate( radians(rotation.x) );
@@ -173,5 +124,4 @@ void rotateVector(PVector vector, PVector rotation){
   temp = new PVector(vector.x, vector.y).rotate( radians(rotation.z) );
   vector.x = temp.x;
   vector.y = temp.y;
->>>>>>> 59122318896445278df9d96576ef343c94b72831
 }
