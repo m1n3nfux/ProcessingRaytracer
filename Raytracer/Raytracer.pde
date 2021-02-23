@@ -1,7 +1,7 @@
 float scale = 100;
 
 //camera: position, rotation, FOV, aspectratio, width, density
-Camera cam = new Camera(new PVector(0,0,000), new PVector(0,0,0), 40, 16.0/9.0, 880, new PVector(1,1));
+Camera cam = new Camera(new PVector(0,0,000), new PVector(0,0,0), 90, 16.0/9.0, 880, new PVector(1,1));
 Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 880, new PVector(10,10));
 
 
@@ -18,6 +18,7 @@ PVector bg_color = new PVector(50, 50, 50);
 float u = selectedCam.u;
 
 Object[] objects;
+Object plane = new Plane( new PVector(0, 80, 0), new float[] { 100, 50 }, new PVector(200, 100, 100), 0.05, 0.6); // (subsoil)
 
 public void settings(){
   size(int(selectedCam.resolution.x),int(selectedCam.resolution.y));
@@ -30,7 +31,7 @@ void setup() {
   
   objects = new Object[] {
     new Sphere(new PVector(0, -100, 90), int(50), new PVector(255, 255, 255), 0, 0), // Light
-    new Plane( new PVector(80, 60, 0), new PVector(200, 100, 100), 0.05, 0.6), // (subsoil)
+    plane,
     
     new Sphere(new PVector(-100, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
     new Sphere(new PVector(-50, 40, 175), int(15), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
@@ -71,7 +72,6 @@ void draw() {
           else {
             PVector col = r.cast(null, new PVector(), 0);
             renderColor.add(col);
-            
           }
         }
       }
@@ -81,7 +81,7 @@ void draw() {
       img.pixels[int(y * selectedCam.resolution.x) + x] = c; // Adding pixel to image
     }
   }
-  
+  //point(plane.points[0].x, 0, plane.points[0].z);
   /*
   Ray r = new Ray( new PVector(x + a/(density/2), y + b/(density/2), 0), new PVector(0, 0, 1));
         if(a == 0 && r.intGet() == false){
@@ -100,6 +100,8 @@ void draw() {
   // Displaying the image
   img.updatePixels();
   image(img, 0, 0);
+  
+  println(plane);
   
   // Saving the image
   img.save("output.jpg");

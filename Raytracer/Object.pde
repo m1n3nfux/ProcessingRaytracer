@@ -1,5 +1,7 @@
 class Object {
   PVector origin;
+  
+  PVector[] points;
 
   PVector c;
   float roughness;
@@ -11,6 +13,10 @@ class Object {
   
   PVector getIntNormal(Ray ray) {
     return new PVector();
+  }
+  
+  void calcPoints() {
+    return;
   }
 }
 
@@ -63,18 +69,21 @@ class Sphere extends Object {
 }
 
 class Plane extends Object {
-  PVector dimensions;
+  float[] dimensions;
   PVector rotation;
 
   PVector normal = new PVector(0, 1, 0);
+  
+  PVector[] points = new PVector[4];
 
-  Plane(PVector origin_, PVector dimensions_, PVector rotation_, PVector c_, float roughness_, float reflectivity_) {
+  Plane(PVector origin_, float[] dimensions_, PVector c_, float roughness_, float reflectivity_) {
     origin = PVector.mult(origin_, u);
     dimensions = dimensions_;
-    rotation = rotation_;
     c = c_;
     roughness = roughness_;
     reflectivity = reflectivity_;
+    
+    calcPoints();
   }
 
   Plane(PVector origin_, PVector c_, float roughness_, float reflectivity_) {
@@ -101,6 +110,34 @@ class Plane extends Object {
     return normal;
   }
 
-  void calc_points() { //calculate points from origin, dimension & rotation
+  //calculate points from origin, dimension & rotation
+  void calcPoints() {
+    // A
+    points[0] = new PVector(
+      origin.x - dimensions[0] / 2,
+      0,
+      origin.z + dimensions[1] / 2
+    );
+    
+    // B
+    points[1] = new PVector(
+      origin.x + dimensions[0] / 2,
+      0,
+      origin.z + dimensions[1] / 2
+    );
+    
+    // C
+    points[2] = new PVector(
+      origin.x + dimensions[0] / 2,
+      0,
+      origin.z - dimensions[1] / 2
+    );
+    
+    // D
+    points[3] = new PVector(
+      origin.x - dimensions[0] / 2,
+      0,
+      origin.z - dimensions[1] / 2
+    );
   }
 }
