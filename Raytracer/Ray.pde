@@ -72,9 +72,15 @@ class Ray {
         // Calculating the successive ray's origin and direction
         // The roughness-factor controls the amount of surface scattering (randomness of reflection-direction)
         PVector rDirection = 
+          
           PVector.add(
             intersection_vector.normalize(), 
-            new PVector(random(-1, 1) * intObj.roughness, random(-1, 1) * intObj.roughness, random(-1, 1) * intObj.roughness)
+            
+            new PVector(
+              random(-1, 1) * intObj.roughness, 
+              random(-1, 1) * intObj.roughness, 
+              random(-1, 1) * intObj.roughness)
+          
           ).normalize();
           
         PVector rOrigin = PVector.add(intPoint, PVector.mult(rDirection, 0.01)); // The successive ray gets a small offset to prevent intersection with previous hit object.

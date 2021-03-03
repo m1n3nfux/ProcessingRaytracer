@@ -1,3 +1,5 @@
+float scale = 100;
+
 // ----- User Parameter -----
 
 //camera: position, rotation, FOV, aspectratio, width, density
@@ -8,7 +10,6 @@ Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 8
 Camera selectedCam = cam;
 
 
-float scale = 100;
 
 //maximum ray hits
 int bounces = 10;
@@ -20,9 +21,8 @@ PVector bg_color = new PVector(50, 50, 50);
 // --------------------------
 
 
-float u = selectedCam.u;
 PImage img = createImage(int(selectedCam.resolution.x), int(selectedCam.resolution.y), RGB);
-
+float u = selectedCam.u;
 Object[] objects;
 
 public void settings(){
