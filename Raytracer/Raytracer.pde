@@ -11,10 +11,10 @@ Camera selectedCam = cam;
 
 
 //maximum ray hits
-int bounces = 5;
+int bounces = 10;
 
 // background color
-PVector bg_color = new PVector(50, 50, 50);
+PVector bg_color = new PVector(100, 100, 100);
 
 
 // --------------------------
@@ -36,25 +36,27 @@ public void settings(){
 
 void setup() {
 
-  Material blue2 = new Material(color(50,250,150),0.5, 0.5, 0.2);
-  Material blue1 = new Material(color(50,210,180),0.5, 0.5, 0);
-  Material ground = new Material(color(200,100,100),0, 1, 1);
+  Material blue2 = new Material(color(50,250,150),0, 0.5, 0);
+  Material blue1 = new Material(color(50,210,180),0, 0.5, 0);
+  Material ground = new Material(color(200,60,60),0.1, 0.5, 0);
   Material lamp = new Material(color(255,255,255),0,0,1);
 
   
   
   objects = new Object[] {
     // Sphere: origin / position, radius, color, roughness, reflectivity  
-    //new Sphere(new PVector(0, -30, 200), int(50), lamp), // Light
+    new Sphere(new PVector(0, -30, 175), int(50), lamp), // Light
     
     // Plane: origin / position, color, roughness, reflectivity
-    new Plane( new PVector(80, 55, 0), ground), // (subsoil)
+    //new Plane( new PVector(80, 55, 0), ground), // (subsoil)
     //new Plane( new PVector(80, -0, 0), lamp),
     new Sphere(new PVector(-100, 40, 175), int(15), blue1), // Small sphere
     new Sphere(new PVector(-50, 40, 175), int(15), blue2), // Small sphere
     new Sphere(new PVector(0, 40, 175), int(15), blue1), // Small sphere
     new Sphere(new PVector(50, 40, 175), int(15), blue2), // Small sphere
     new Sphere(new PVector(100, 40, 175), int(15), blue1), // Small sphere
+    
+    new Sphere(new PVector(0, 1870, 100), int(2000), ground), // Small sphere
   };
 }
 
