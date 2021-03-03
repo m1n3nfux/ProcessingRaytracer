@@ -24,7 +24,7 @@ class Ray {
       
       if( t != 0 ){ //hit
         // determine closest intersection object
-        if (t_min == 0 || abs(t) < t_min) {
+        if (t_min == 0 || t < t_min) {
           t_min = t;
           closest = obj; 
         }
