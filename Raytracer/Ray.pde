@@ -63,7 +63,7 @@ class Ray {
         } else { 
           // 2nd-nth bounce: Add oject color to current color according to reflectivity settings
           newColor = PVector.add(PVector.mult(intObj.c, intObj.reflectivity), PVector.mult(prevColor, 1-intObj.reflectivity));
-          light+=intObj.luminance;
+          light+=intObj.luminance / (count * 0.2);
         }
       
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
@@ -101,9 +101,9 @@ class Ray {
       //newColor = PVector.add(PVector.mult(bg_color, 1-firstHitObject.reflectivity), PVector.mult(prevColor, firstHitObject.reflectivity));
     }
     // Returning final color
-    float factor = 0.5;
-    newColor = PVector.add(PVector.mult(PVector.mult(newColor, light), factor), PVector.mult(newColor, 1-factor));
-    //newColor = PVector.mult(newColor, light);
+    float factor = 0.05;
+    //newColor = PVector.add(PVector.mult(PVector.mult(newColor, light), factor), PVector.mult(newColor, 1-factor));
+    newColor = PVector.mult(newColor, light+factor*0.25);
     
     return newColor;
   }

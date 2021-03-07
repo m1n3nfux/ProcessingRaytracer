@@ -1,19 +1,17 @@
-float scale = 100;
-
 // ----- User Parameter -----
 float scale = 100;
 //camera: position, rotation, FOV, aspectratio, width, density
-Camera cam = new Camera(new PVector(0,20,0), new PVector(0,0,0), 40, 16.0/9.0, 880, 5);
+Camera cam = new Camera(new PVector(0,25,-30), new PVector(-10,0,0), 40, 16.0/9.0, 880, 8);
 Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 880, 10);
 
 // select active camera
 Camera selectedCam = cam;
 
 //maximum ray hits
-int bounces = 10;
+int bounces = 2;
 
 // background color
-PVector bg_color = new PVector(100, 100, 100);
+PVector bg_color = new PVector(100,100,100);
 
 
 // --------------------------
@@ -38,25 +36,25 @@ public void settings(){
 
 void setup() {
 
-  Material blue2 = new Material(color(50,250,150),0, 0.5, 0);
-  Material blue1 = new Material(color(50,210,180),0, 0.5, 0);
-  Material ground = new Material(color(200,60,60),0.1, 0.5, 0);
+  Material blue2 = new Material(color(50,250,150),0.6, 0.5, 0);
+  Material blue1 = new Material(color(50,210,180),0.6, 0.5, 0);
+  Material ground = new Material(color(200,60,60),0.8, 1, 0);
   Material lamp = new Material(color(255,255,255),0,0,1);
 
   
   
   objects = new Object[] {
     // Sphere: origin / position, radius, color, roughness, reflectivity  
-    new Sphere(new PVector(0, -30, 175), int(50), lamp), // Light
+    new Sphere(new PVector(0, -120, 75), int(100), lamp), // Light
     
     // Plane: origin / position, color, roughness, reflectivity
-    //new Plane( new PVector(80, 55, 0), ground), // (subsoil)
+    //new Plane( new PVector(0, 55, 0), ground), // (subsoil)
     //new Plane( new PVector(80, -0, 0), lamp),
-    new Sphere(new PVector(-100, 40, 175), int(15), blue1), // Small sphere
-    new Sphere(new PVector(-50, 40, 175), int(15), blue2), // Small sphere
-    new Sphere(new PVector(0, 40, 175), int(15), blue1), // Small sphere
-    new Sphere(new PVector(50, 40, 175), int(15), blue2), // Small sphere
-    new Sphere(new PVector(100, 40, 175), int(15), blue1), // Small sphere
+    new Sphere(new PVector(-100, 40, 50), int(15), blue1), // Small sphere
+    new Sphere(new PVector(-50, 40, 50), int(15), blue2), // Small sphere
+    new Sphere(new PVector(0, 40, 50), int(15), blue1), // Small sphere
+    new Sphere(new PVector(50, 40, 50), int(15), blue2), // Small sphere
+    new Sphere(new PVector(100, 40, 50), int(15), blue1), // Small sphere
     
     new Sphere(new PVector(0, 1870, 100), int(2000), ground), // Small sphere
   };
@@ -77,8 +75,6 @@ void draw() {
       // Sending multiple Rays per pixel 
       for (int a = 0; a < selectedCam.density.x; a++) {
         for (int b = 0; b < selectedCam.density.y; b++) {
-          
-          //println(a, b);
           
           // Creating a new ray
           Ray r = new Ray(
@@ -139,4 +135,7 @@ void rotateVector(PVector vector, PVector rotation){
   temp = new PVector(vector.x, vector.y).rotate( radians(rotation.z) );
   vector.x = temp.x;
   vector.y = temp.y;
+}
+void mouseClicked(){
+  println("x:", mouseX, " y:", mouseY);
 }
