@@ -4,7 +4,7 @@ class Object {
   PVector c;
   float roughness;
   float reflectivity;
-
+  float luminance;
   // Dummy functions 
   float intDist(Ray ray) {
     return 0;
@@ -18,12 +18,13 @@ class Object {
 class Sphere extends Object { 
   int radius;
 
-  Sphere(PVector origin_, int radius_, PVector c_, float roughness_, float reflectivity_) {
+  Sphere(PVector origin_, int radius_, Material material_) {
     origin = PVector.mult(origin_, u);
     radius = radius_ * int(u);
-    c = c_;
-    roughness = roughness_;
-    reflectivity = reflectivity_;
+    c = material_.c;
+    roughness = material_.roughness;
+    reflectivity = material_.reflectivity;
+    luminance = material_.luminance;
   } 
 
   float intDist(Ray ray) {
@@ -76,20 +77,24 @@ class Plane extends Object {
 
   PVector normal = new PVector(0, 1, 0);
 
-  Plane(PVector origin_, PVector dimensions_, PVector rotation_, PVector c_, float roughness_, float reflectivity_) {
+  Plane(PVector origin_, PVector dimensions_, PVector rotation_, Material material_) {
     origin = PVector.mult(origin_, u);
     dimensions = dimensions_;
     rotation = rotation_;
-    c = c_;
-    roughness = roughness_;
-    reflectivity = reflectivity_;
+    
+    c = material_.c;
+    roughness = material_.roughness;
+    reflectivity = material_.reflectivity;
+    luminance = material_.luminance;
   }
 
-  Plane(PVector origin_, PVector c_, float roughness_, float reflectivity_) {
+  Plane(PVector origin_, Material material_) {
     origin = PVector.mult(origin_, u);
-    c = c_;
-    roughness = roughness_;
-    reflectivity = reflectivity_;
+    
+    c = material_.c;
+    roughness = material_.roughness;
+    reflectivity = material_.reflectivity;
+    luminance = material_.luminance;
   }
 
   // Calculate the distance between origin and intersection point

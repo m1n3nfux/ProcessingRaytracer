@@ -27,7 +27,7 @@ class Ray {
         if (t_min == 0 || t < t_min) {
           t_min = t;
           closest = obj; 
-        }
+        } 
       }
     }
 
@@ -45,7 +45,7 @@ class Ray {
   }
   
   // Cast the ray
-  PVector cast(Object firstHitObject, PVector prevColor, int count) {
+  PVector cast(Object firstHitObject, PVector prevColor, int count, float light) {
     PVector newColor = bg_color;
     
     if (intGet()) {
@@ -59,10 +59,11 @@ class Ray {
           
           newColor = intObj.c;
           firstHitObject = intObj;
-          
+          light=intObj.luminance;
         } else { 
           // 2nd-nth bounce: Add oject color to current color according to reflectivity settings
-          newColor = PVector.add(PVector.mult(intObj.c, firstHitObject.reflectivity), PVector.mult(prevColor, 1-firstHitObject.reflectivity));
+          newColor = PVector.add(PVector.mult(intObj.c, intObj.reflectivity), PVector.mult(prevColor, 1-intObj.reflectivity));
+          light+=intObj.luminance;
         }
       
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
@@ -85,20 +86,25 @@ class Ray {
           
         PVector rOrigin = PVector.add(intPoint, PVector.mult(rDirection, 0.01)); // The successive ray gets a small offset to prevent intersection with previous hit object.
         
-        // Only cast the next ray if it doesn't point into the object
-        if (PVector.dot(rDirection, intNormal) >= 0) {
-          
-          // create and cast new ray
-          Ray r = new Ray(rOrigin, rDirection);
-          return r.cast(firstHitObject, newColor, count + 1);
-          
+        // Only cast the next ray if it doesn't point into a object 
+        if(firstHitObject instanceof Sphere && PVector.dot(rDirection, intNormal) >= 0 || firstHitObject instanceof Sphere == false){
+            if (intObj.luminance < 1) {
+              // create and cast new ray
+              Ray r = new Ray(rOrigin, rDirection);
+              return r.cast(firstHitObject, newColor, count + 1, light);
+            }
         }
       }
-      // If ray doesn't hit anything return final color
+    
+    // If ray doesn't hit anything return final color
     } else if (firstHitObject != null) {
-      newColor = PVector.add(PVector.mult(bg_color, 1-firstHitObject.reflectivity), PVector.mult(prevColor, firstHitObject.reflectivity));
+      //newColor = PVector.add(PVector.mult(bg_color, 1-firstHitObject.reflectivity), PVector.mult(prevColor, firstHitObject.reflectivity));
     }
     // Returning final color
+    float factor = 0.5;
+    newColor = PVector.add(PVector.mult(PVector.mult(newColor, light), factor), PVector.mult(newColor, 1-factor));
+    //newColor = PVector.mult(newColor, light);
+    
     return newColor;
   }
   
