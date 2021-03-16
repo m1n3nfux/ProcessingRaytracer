@@ -14,9 +14,9 @@ Später können eventuell noch Field-Of-View / Perspektive, Spiegelungen und Bew
 - ( https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection )
 
 #### Beispiele & Tutorials
-Raytracing Tutorialserie in Java *aus dem Fenster spring*
+Raytracing Tutorialserie in Java 
 - https://youtube.com/playlist?list=PLNmsVeXQZj7rvhHip_LTM-J-5wHw7dWnw 
-Raycasting in Processing Codebeispiel 
+Raycasting in Processing Codebeispiel
 - https://forum.processing.org/two/discussion/comment/106556/#Comment_106556
 
 
@@ -41,6 +41,11 @@ Raycasting in Processing Codebeispiel
   - (√) Plane (Size und Rotation fehlen)
   - Dreieck (Grundlage für Import von jeglichen 3d-Modellen)
 
+### Bekannte Bugs
+- Schatten funktionieren nicht
+  - Licht scheint an sich zu funktionieren (helle/dunkle Seite von beleuchteten Kugeln)
+  - Kein Schattenwurf (Objekte haben keinen Einfluss auf den Lichteinfall anderer Objekte)
+- Flächen-Ray-Kollision funktioniert nicht richtig, muss grundlegend überarbeitet werden
 
 ### Protokoll
 (Alle Veränderungen / Updates auch unter Commits sichtbar)
