@@ -1,7 +1,11 @@
 // ----- User Parameter -----
 
 //camera: position, rotation, FOV, aspectratio, width, density
+<<<<<<< Updated upstream
 Camera cam = new Camera(new PVector(0,0,000), new PVector(0,0,0), 40, 16.0/9.0, 880, 1);
+=======
+Camera cam = new Camera(new PVector(0,5,-30), new PVector(-35,0,0), 40, 16.0/9.0, 880, 2);
+>>>>>>> Stashed changes
 Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 880, 10);
 
 // select active camera
@@ -11,7 +15,11 @@ Camera selectedCam = cam;
 float scale = 100;
 
 //maximum ray hits
+<<<<<<< Updated upstream
 int bounces = 10;
+=======
+int bounces = 4;
+>>>>>>> Stashed changes
 
 // background color
 PVector bg_color = new PVector(50, 50, 50);
@@ -34,6 +42,7 @@ public void settings(){
 
 void setup() {
   
+<<<<<<< Updated upstream
   objects = new Object[] {
     // Sphere: origin / position, radius, color, roughness, reflectivity  
     new Sphere(new PVector(0, -100, 90), int(50), new PVector(255, 255, 255), 0, 0), // Light
@@ -46,6 +55,29 @@ void setup() {
     new Sphere(new PVector(0, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
     new Sphere(new PVector(50, 40, 175), int(15), new PVector(46, 215, 187), 0.2, 0.5), // Small sphere
     new Sphere(new PVector(100, 40, 175), int(15), new PVector(46, 259, 151), 0.2, 0.5), // Small sphere
+=======
+  // Material syntax: color, roughness, reflectivity, luminance
+  // reflectivity: 0 = show own color when lit, 1 = show color of oject in reflectio
+  Material blue2 = new Material(color(50,250,150),0.6, 0.5, 0);
+  Material blue1 = new Material(color(50,210,180),0.6, 0.5, 0);
+  Material ground = new Material(color(200,60,60),0.2, 0.2, 0);
+  Material lamp = new Material(color(255,255,255),0,1,1);
+
+  objects = new Object[] {
+    // Sphere: origin / position, radius, color, roughness, reflectivity  
+    new Sphere(new PVector(0, -100, 50), int(100), lamp), // Light
+    
+    // Plane: origin / position, color, roughness, reflectivity
+    //new Plane( new PVector(0, 55, 0), ground), // (subsoil)
+    //new Plane( new PVector(80, -0, 0), lamp),
+    new Sphere(new PVector(-100, 40, 50), int(15), blue1), // Small sphere
+    new Sphere(new PVector(-50, 40, 50), int(15), blue2), // Small sphere
+    new Sphere(new PVector(0, 43, 50), int(15), blue1), // Small sphere
+    new Sphere(new PVector(50, 40, 50), int(15), blue2), // Small sphere
+    new Sphere(new PVector(100, 40, 50), int(15), blue1), // Small sphere
+    
+    new Sphere(new PVector(0, 1875, 100), int(2000), ground), // Ground sphere
+>>>>>>> Stashed changes
   };
 }
 
@@ -81,8 +113,13 @@ void draw() {
             b = int(selectedCam.density.y);
           }
           else {
+<<<<<<< Updated upstream
             // casting the ray and adding corresponding color
             PVector col = r.cast(null, new PVector(), 0);
+=======
+            //casting the ray and adding corresponding color
+            PVector col = r.cast(null, null, new PVector(), 0, 0.0, 0);
+>>>>>>> Stashed changes
             renderColor.add(col);
             
             usedRays++;
