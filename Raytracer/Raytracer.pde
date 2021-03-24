@@ -1,9 +1,8 @@
-float scale = 100;
-
 // ----- User Parameter -----
 float scale = 100;
+
 //camera: position, rotation, FOV, aspectratio, width, density
-Camera cam = new Camera(new PVector(0,20,0), new PVector(0,0,0), 40, 16.0/9.0, 880, 5);
+Camera cam = new Camera(new PVector(0,00,-100), new PVector(-15,0,0), 30, 16.0/9.0, 880, 5);
 Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 880, 10);
 
 // select active camera
@@ -28,6 +27,7 @@ float u = selectedCam.u;
 
 Object[] objects;
 
+float gamma = 0.2; //light offset
 
 public void settings(){
   size(int(selectedCam.resolution.x),int(selectedCam.resolution.y));
@@ -37,24 +37,24 @@ public void settings(){
 }
 
 void setup() {
-
-  Material blue2 = new Material(color(50,250,150),0, 0.5, 0);
-  Material blue1 = new Material(color(50,210,180),0, 0.5, 0);
-  Material ground = new Material(color(200,60,60),0.1, 0.5, 0);
+  //syntax: color, roughness, reflectivity, luminance
+  Material blue2 = new Material(color(50,250,150),0.5, 0.5, 0);
+  Material blue1 = new Material(color(50,210,180),0.5, 0.5, 0);
+  Material ground = new Material(color(200,60,60),0.9, 0, 0);
   Material lamp = new Material(color(255,255,255),0,0,1);
 
   
   
   objects = new Object[] {
-    // Sphere: origin / position, radius, color, roughness, reflectivity  
-    new Sphere(new PVector(0, -30, 175), int(50), lamp), // Light
+    // Sphere: origin / position, radius, material 
+    new Sphere(new PVector(0, -50, 175), int(100), lamp), // Light
     
-    // Plane: origin / position, color, roughness, reflectivity
+    // Plane: origin / position, material
     //new Plane( new PVector(80, 55, 0), ground), // (subsoil)
     //new Plane( new PVector(80, -0, 0), lamp),
     new Sphere(new PVector(-100, 40, 175), int(15), blue1), // Small sphere
     new Sphere(new PVector(-50, 40, 175), int(15), blue2), // Small sphere
-    new Sphere(new PVector(0, 40, 175), int(15), blue1), // Small sphere
+    new Sphere(new PVector(0, 30,0), int(30), blue1), // Small sphere
     new Sphere(new PVector(50, 40, 175), int(15), blue2), // Small sphere
     new Sphere(new PVector(100, 40, 175), int(15), blue1), // Small sphere
     
@@ -97,7 +97,7 @@ void draw() {
           }
           else {
             //casting the ray and adding corresponding color
-            PVector col = r.cast(null, new PVector(), 0, 0.0);
+            PVector col = r.cast(null, null, new PVector(), 0, 0.0, 0);
             renderColor.add(col);
             
             usedRays++;

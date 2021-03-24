@@ -7,6 +7,7 @@ class Ray {
   PVector intPoint;
   PVector intNormal;
   Object intObj;
+  Object prevHitObject;
   
   Ray(PVector origin_, PVector direction_) {
     origin = origin_;
@@ -45,7 +46,7 @@ class Ray {
   }
   
   // Cast the ray
-  PVector cast(Object firstHitObject, PVector prevColor, int count, float light) {
+  PVector cast(Object firstHitObject, Object prevHitObject, PVector prevColor, int count, float light, float maxLight) {
     PVector newColor = bg_color;
     
     if (intGet()) {
@@ -56,14 +57,15 @@ class Ray {
           
           //intObj.c = new PVector(intNormal.x * 255, intNormal.y * 255, intNormal.z * 255);
           // ^ Uncomment to display direction of normals as colors
-          
+          maxLight = 1;
           newColor = intObj.c;
           firstHitObject = intObj;
           light=intObj.luminance;
         } else { 
           // 2nd-nth bounce: Add oject color to current color according to reflectivity settings
-          newColor = PVector.add(PVector.mult(intObj.c, intObj.reflectivity), PVector.mult(prevColor, 1-intObj.reflectivity));
-          light+=intObj.luminance;
+          newColor = PVector.add(PVector.mult(intObj.c, prevHitObject.reflectivity), PVector.mult(prevColor, 1-prevHitObject.reflectivity));
+          light+=intObj.luminance / (count * 0.1);
+          maxLight+=1 / (count * 0.1);
         }
       
         // Calculating the vector that forms the same angle relative to the normal as the incoming ray 
@@ -91,19 +93,21 @@ class Ray {
             if (intObj.luminance < 1) {
               // create and cast new ray
               Ray r = new Ray(rOrigin, rDirection);
-              return r.cast(firstHitObject, newColor, count + 1, light);
+              return r.cast(firstHitObject, intObj, newColor, count + 1, light, maxLight);
             }
         }
       }
     
     // If ray doesn't hit anything return final color
     } else if (firstHitObject != null) {
-      //newColor = PVector.add(PVector.mult(bg_color, 1-firstHitObject.reflectivity), PVector.mult(prevColor, firstHitObject.reflectivity));
+      newColor = PVector.add(PVector.mult(bg_color, 1-firstHitObject.reflectivity), PVector.mult(prevColor, firstHitObject.reflectivity));
     }
     // Returning final color
-    float factor = 0.5;
-    newColor = PVector.add(PVector.mult(PVector.mult(newColor, light), factor), PVector.mult(newColor, 1-factor));
-    //newColor = PVector.mult(newColor, light);
+    maxLight += gamma;
+    float offset = 0.125;
+    float lighting = map(light+offset, 0, maxLight, 0, 1);
+
+    newColor = PVector.mult(newColor, lighting);
     
     return newColor;
   }
