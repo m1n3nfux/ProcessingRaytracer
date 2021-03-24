@@ -129,3 +129,10 @@ Ergebnisse s. Oben ;)
 #### Di. 23.02.2021
 - Code ausgiebig kommentiert
 - Code aufgeräumt
+
+#### Mo. 15.03.2021
+- Licht-System überarbeitet
+
+#### Mi. 24.03.2021
+- Von Bildgröße abhängige Längeneinheit korrigiert
+- Invertierbare Achsen implementiert
