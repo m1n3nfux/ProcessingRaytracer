@@ -16,11 +16,14 @@ class Object {
 }
 
 class Sphere extends Object { 
-  int radius;
+  float radius;
 
   Sphere(PVector origin_, int radius_, Material material_) {
+    
     origin = PVector.mult(origin_, u);
-    radius = radius_ * int(u);
+    origin = multVec(origin, axisDirection);
+    
+    radius = radius_ * (u);
     c = material_.c;
     roughness = material_.roughness;
     reflectivity = material_.reflectivity;

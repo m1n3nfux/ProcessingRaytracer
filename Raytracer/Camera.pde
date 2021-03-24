@@ -17,7 +17,9 @@ class Camera {
     u = frameWidth_ / scale;
     
     direction = direction_;
+    
     origin = PVector.mult(origin_, u);
+    origin = multVec(origin, axisDirection);
     
     FOV = map(FOV_, 0, 90, 0, 1); // Converting FOV from degrees to 0, 1 
     

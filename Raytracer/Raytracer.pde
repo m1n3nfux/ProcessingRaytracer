@@ -1,8 +1,10 @@
 // ----- User Parameter -----
 float scale = 100;
 
+PVector axisDirection = new PVector(1,-1,-1); //inverts y and z axis
+
 //camera: position, rotation, FOV, aspectratio, width, density
-Camera cam = new Camera(new PVector(0,00,-100), new PVector(-15,0,0), 30, 16.0/9.0, 880, 5);
+Camera cam = new Camera(new PVector(0,70,-50), new PVector(-20,0,0), 40, 16.0/9.0, 960, 5);
 Camera cam1 = new Camera(new PVector(0,0,0), new PVector(0,0,0), 90, 16.0/9.0, 880, 10);
 
 // select active camera
@@ -25,6 +27,8 @@ Material[] materials;
 
 float u = selectedCam.u;
 
+
+
 Object[] objects;
 
 float gamma = 0.2; //light offset
@@ -37,28 +41,29 @@ public void settings(){
 }
 
 void setup() {
+
   //syntax: color, roughness, reflectivity, luminance
   Material blue2 = new Material(color(50,250,150),0.5, 0.5, 0);
   Material blue1 = new Material(color(50,210,180),0.5, 0.5, 0);
-  Material ground = new Material(color(200,60,60),0.9, 0, 0);
+  Material ground = new Material(color(200,60,60),0.8, 0.5, 0);
   Material lamp = new Material(color(255,255,255),0,0,1);
 
   
   
   objects = new Object[] {
     // Sphere: origin / position, radius, material 
-    new Sphere(new PVector(0, -50, 175), int(100), lamp), // Light
+    new Sphere(new PVector(0, 150, -200), int(80), lamp), // Light
     
     // Plane: origin / position, material
     //new Plane( new PVector(80, 55, 0), ground), // (subsoil)
     //new Plane( new PVector(80, -0, 0), lamp),
-    new Sphere(new PVector(-100, 40, 175), int(15), blue1), // Small sphere
-    new Sphere(new PVector(-50, 40, 175), int(15), blue2), // Small sphere
-    new Sphere(new PVector(0, 30,0), int(30), blue1), // Small sphere
-    new Sphere(new PVector(50, 40, 175), int(15), blue2), // Small sphere
-    new Sphere(new PVector(100, 40, 175), int(15), blue1), // Small sphere
+    new Sphere(new PVector(-100, 0, -175), int(15), blue1), // Small sphere
+    new Sphere(new PVector(-50, 0, -175), int(15), blue2), // Small sphere
+    new Sphere(new PVector(0, 15, -175), int(30), blue1), // Small sphere
+    new Sphere(new PVector(50, 0, -175), int(15), blue2), // Small sphere
+    new Sphere(new PVector(100, 0, -175), int(15), blue1), // Small sphere
     
-    new Sphere(new PVector(0, 1870, 100), int(2000), ground), // Small sphere
+    new Sphere(new PVector(0, -2015, -175), int(2000), ground), // Small sphere
   };
 }
 
@@ -82,7 +87,7 @@ void draw() {
           
           // Creating a new ray
           Ray r = new Ray(
-            new PVector(x + selectedCam.origin.x + a/(selectedCam.density.x) - selectedCam.resolution.x/2, y + selectedCam.origin.y + b/(selectedCam.density.y) - selectedCam.resolution.y/2, 0 + selectedCam.origin.z), 
+            new PVector(x + selectedCam.origin.x + a/(selectedCam.density.x) - selectedCam.resolution.x/2, y + selectedCam.origin.y + b/(selectedCam.density.y) - selectedCam.resolution.y/2, 0 + selectedCam.origin.z), // 
             new PVector( map(x, 0, selectedCam.resolution.x, -selectedCam.FOV , selectedCam.FOV ), map(y, 0, selectedCam.resolution.y, -selectedCam.FOV / selectedCam.aspectratio, selectedCam.FOV / selectedCam.aspectratio), 1)
           );
           // Rotating ray according to camera-rotation
@@ -97,7 +102,7 @@ void draw() {
           }
           else {
             //casting the ray and adding corresponding color
-            PVector col = r.cast(null, null, new PVector(), 0, 0.0, 0);
+            PVector col = r.cast(null, null, new PVector(), 0, 0.0, 0.5);
             renderColor.add(col);
             
             usedRays++;
@@ -139,4 +144,13 @@ void rotateVector(PVector vector, PVector rotation){
   temp = new PVector(vector.x, vector.y).rotate( radians(rotation.z) );
   vector.x = temp.x;
   vector.y = temp.y;
+}
+
+
+PVector multVec(PVector v1, PVector v2){
+  PVector v3 = new PVector();
+  v3.x = v1.x * v2.x;
+  v3.y = v1.y * v2.y;
+  v3.z = v1.z * v2.z;
+  return v3;
 }
