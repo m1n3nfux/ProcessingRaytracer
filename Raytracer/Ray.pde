@@ -103,8 +103,9 @@ class Ray {
       newColor = PVector.add(PVector.mult(bg_color, 1-firstHitObject.reflectivity), PVector.mult(prevColor, firstHitObject.reflectivity));
     }
     // Returning final color
-    float factor = 0.5;
-    float lighting = map(light+factor*0.25, 0, maxLight, 0, 1);
+    maxLight += gamma;
+    float offset = 0.125;
+    float lighting = map(light+offset, 0, maxLight, 0, 1);
 
     newColor = PVector.mult(newColor, lighting);
     
